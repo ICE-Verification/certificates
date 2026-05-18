@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نظام التحقق من الشهادات | International College of Entrepreneurship</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* إعدادات عامة لضمان تجاوب المقاسات */
         * { box-sizing: border-box; }
@@ -26,11 +27,11 @@
             background: white; 
             padding: 40px 30px; 
             border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(30, 58, 138, 0.12); /* ظل ناعم مائل للكحلي */
+            box-shadow: 0 10px 30px rgba(30, 58, 138, 0.12);
             text-align: center; 
             max-width: 550px; 
             width: 100%; 
-            border-top: 6px solid #1e3a8a; /* لون الكلية الأساسي */
+            border-top: 6px solid #1e3a8a;
         }
         
         /* تنسيقات الشعار والترويسة */
@@ -55,7 +56,7 @@
             color: #4a5568; 
             line-height: 1.9; 
             margin-bottom: 30px; 
-            text-align: center; /* توسيط النص */
+            text-align: center; 
             padding-bottom: 20px;
             border-bottom: 1px solid #e2e8f0;
         }
@@ -121,6 +122,34 @@
         .result-item { margin-bottom: 10px; font-size: 15px; color: #2d3748;}
         .result-item strong { color: #1a202c; }
 
+        /* تنسيقات أيقونات التواصل الاجتماعي المستحدثة */
+        .social-icons {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .social-icon:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        .facebook-btn { background-color: #1877F2; }
+        .whatsapp-btn { background-color: #25D366; }
+
         /* تعديلات خاصة بشاشات الموبايل (التجاوب) */
         @media (max-width: 480px) {
             .container { padding: 30px 20px; }
@@ -128,6 +157,7 @@
             .description { font-size: 13px; line-height: 1.7; }
             .logo { width: 130px; }
             input, button { font-size: 15px; padding: 12px; }
+            .social-icon { width: 40px; height: 40px; font-size: 20px; }
         }
     </style>
 </head>
@@ -155,6 +185,15 @@
     <button onclick="verifyCertificate()">تحقق الآن</button>
 
     <div id="result"></div>
+
+    <div class="social-icons">
+        <a href="https://www.facebook.com/ICE.ShujaaAlFahd/" target="_blank" class="social-icon facebook-btn" title="تفضل بزيارة صفحتنا على فيسبوك">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://wa.me/905370485710" target="_blank" class="social-icon whatsapp-btn" title="تواصل معنا مباشرة عبر واتساب">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
 </div>
 
 <script>
