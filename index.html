@@ -1,107 +1,210 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام التحقق من الشهادات | International College of Entrepreneurship</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px;}
-        .container { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); text-align: center; max-width: 450px; width: 100%; border-top: 6px solid #1e3a8a; }
-        
-        /* تنسيقات الترويسة والشعار */
-        .header-section { margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
-        .logo { width: 150px; height: auto; margin-bottom: 15px; }
-        .college-title { font-size: 20px; color: #1e3a8a; font-weight: bold; margin: 0 0 10px 0; }
-        .description { text-align: justify; font-size: 13px; color: #555; line-height: 1.8; margin-top: 15px; padding: 0 10px; }
-        .license-number { font-weight: bold; color: #d32f2f; } /* لون مميز لرقم الترخيص */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام التحقق من الشهادات | International College of Entrepreneurship</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <style>
+        /* إعدادات عامة لضمان تجاوب المقاسات */
+        * { box-sizing: border-box; }
+        
+        /* تنسيق الخلفية المريحة المستوحاة من الشعار */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 15px; 
+        }
 
-        /* تنسيقات نموذج التحقق */
-        .verification-section { margin-top: 25px; }
-        input { width: 90%; padding: 12px; margin-bottom: 18px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; text-align: center; transition: border-color 0.3s; }
-        input:focus { border-color: #1e3a8a; outline: none; }
-        button { background-color: #1e3a8a; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; transition: background-color 0.3s; }
-        button:hover { background-color: #152b69; }
-        #result { margin-top: 25px; text-align: right; padding: 20px; background: #e8f4fd; border-radius: 8px; display: none; border: 1px solid #c2e0f4; }
-        .success-icon { color: green; font-weight: bold; font-size: 18px; margin-bottom: 10px; display: block; }
-        .result-item { margin-bottom: 8px; font-size: 15px; }
-    </style>
+        /* حاوية المحتوى الرئيسية */
+        .container { 
+            background: white; 
+            padding: 40px 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(30, 58, 138, 0.12); /* ظل ناعم مائل للكحلي */
+            text-align: center; 
+            max-width: 550px; 
+            width: 100%; 
+            border-top: 6px solid #1e3a8a; /* لون الكلية الأساسي */
+        }
+        
+        /* تنسيقات الشعار والترويسة */
+        .logo { 
+            width: 160px; 
+            max-width: 100%; 
+            height: auto; 
+            margin-bottom: 20px; 
+            display: inline-block;
+        }
+        .college-title { 
+            font-size: 22px; 
+            color: #1e3a8a; 
+            font-weight: bold; 
+            margin: 0 0 15px 0; 
+            line-height: 1.4;
+        }
+        
+        /* تنسيق النص التعريفي */
+        .description { 
+            font-size: 14px; 
+            color: #4a5568; 
+            line-height: 1.9; 
+            margin-bottom: 30px; 
+            text-align: center; /* توسيط النص */
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .license-number { 
+            font-weight: bold; 
+            color: #c53030; 
+        }
+
+        /* تنسيقات نموذج التحقق */
+        .verification-title {
+            font-size: 18px; 
+            color: #1e3a8a; 
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .verification-subtitle {
+            color: #718096; 
+            font-size: 14px; 
+            margin-bottom: 20px;
+        }
+        input { 
+            width: 100%; 
+            padding: 14px; 
+            margin-bottom: 15px; 
+            border: 2px solid #cbd5e0; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            text-align: center; 
+            transition: border-color 0.3s, box-shadow 0.3s; 
+        }
+        input:focus { 
+            border-color: #1e3a8a; 
+            outline: none; 
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
+        }
+        button { 
+            background-color: #1e3a8a; 
+            color: white; 
+            border: none; 
+            padding: 14px 24px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            width: 100%; 
+            font-weight: bold; 
+            transition: background-color 0.3s; 
+        }
+        button:hover { 
+            background-color: #152b69; 
+        }
+        
+        /* تنسيقات صندوق النتيجة */
+        #result { 
+            margin-top: 25px; 
+            text-align: right; 
+            padding: 20px; 
+            background: #e8f4fd; 
+            border-radius: 8px; 
+            display: none; 
+            border: 1px solid #c2e0f4; 
+        }
+        .success-icon { color: #276749; font-weight: bold; font-size: 18px; margin-bottom: 15px; display: block; text-align: center;}
+        .result-item { margin-bottom: 10px; font-size: 15px; color: #2d3748;}
+        .result-item strong { color: #1a202c; }
+
+        /* تعديلات خاصة بشاشات الموبايل (التجاوب) */
+        @media (max-width: 480px) {
+            .container { padding: 30px 20px; }
+            .college-title { font-size: 19px; }
+            .description { font-size: 13px; line-height: 1.7; }
+            .logo { width: 130px; }
+            input, button { font-size: 15px; padding: 12px; }
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
-        <div class="header-section">
-        <img src="logo.png" alt="شعار كلية ريادة الأعمال الدولية" class="logo">
-        <h1 class="college-title">كلية ريادة الأعمال الدولية / اسطنبول</h1>
-        <div class="description">
-            <strong>كلّيّة ريادة الأعمال الدوليّةَ I.C.E</strong><br>
-            مرخّصة لدى الجمهوريّة التركيّة – إسطنبول برقم <span class="license-number">5-368979</span><br>
-            لتقديم كافة أنواع الخدمات التعليمية والتدريبيّة وتقديم خدمات التعليم والتدريب عن بعد.<br>
-            وإبرام الاتفاقيّات مع المؤسّسات التعليميّة المحليّة الدولية لتعليم الطلاب المحلّيّين والأجانب.<br>
-            وتقديم الخدمات الاستشاريّة التعليميّة للطلاب في الداخل والخارج على حد سواء فيما يتعلق بقضايا التعليم الدوليّ.<br>
-            وتنظيم الندوات والأنشطة التعليمية والتدريبيّة الأخرى.<br>
-            وتنظيم برامج التبادل الطلابيّ مع مؤسّسات التعليم في الخارج.<br>
-            وتقديم البرامج والاستشارات للأفراد والمؤسّسات في مجالات ريادة وتطوير الأعمال.<br>
-            وكذلك تقديم جميع أنواع تحليلات السوق وأبحاث السوق وتحليل المشاريع وأنشطة تطويرها للشركات المحلّيّة والأجنبيّة وتقديم الاستشارات والخدمات التنظيميّة
-        </div>
-    </div>
+    <img src="logo.png" alt="شعار كلية ريادة الأعمال الدولية" class="logo">
+    <h1 class="college-title">كلية ريادة الأعمال الدولية / إسطنبول</h1>
+    
+    <div class="description">
+        <strong>كلّيّة ريادة الأعمال الدوليّةَ I.C.E</strong><br>
+        مرخّصة لدى الجمهوريّة التركيّة – إسطنبول برقم <span class="license-number">5-368979</span><br>
+        لتقديم كافة أنواع الخدمات التعليمية والتدريبيّة، وتقديم خدمات التعليم والتدريب عن بعد.<br>
+        وإبرام الاتفاقيّات مع المؤسّسات التعليميّة المحليّة والدولية لتعليم الطلاب المحلّيّين والأجانب.<br>
+        وتقديم الخدمات الاستشاريّة التعليميّة للطلاب في الداخل والخارج فيما يتعلق بقضايا التعليم الدوليّ.<br>
+        وتنظيم الندوات والأنشطة التعليمية والتدريبيّة، وبرامج التبادل الطلابيّ في الخارج.<br>
+        وتقديم البرامج والاستشارات للأفراد والمؤسّسات في مجالات ريادة وتطوير الأعمال.<br>
+        وتقديم جميع أنواع أبحاث السوق وتحليل المشاريع للشركات المحلّيّة والأجنبيّة.
+    </div>
 
-        <div class="verification-section">
-        <h2 style="font-size: 18px; margin-bottom: 10px;">التحقق من الشهادات</h2>
-        <p style="color: #666; font-size: 14px; margin-bottom: 20px;">أدخل الرقم المرجعي للشهادة للتحقق من صحتها</p>
-        
-        <input type="text" id="refInput" placeholder="مثال: ICE-PTAD-26-042">
-        <button onclick="verifyCertificate()">تحقق الآن</button>
+    <div class="verification-title">نظام التحقق من الشهادات</div>
+    <div class="verification-subtitle">أدخل الرقم المرجعي للشهادة للتحقق من صحتها</div>
+    
+    <input type="text" id="refInput" placeholder="مثال: ICE-PTAD-26-042">
+    <button onclick="verifyCertificate()">تحقق الآن</button>
 
-        <div id="result"></div>
-    </div>
+    <div id="result"></div>
 </div>
 
 <script>
-    // رابط ملف الـ CSV الذي قمت بتوليده من جوجل شيتس
-    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=196238973&single=true&output=csv';
+    // رابط ملف الـ CSV الذي قمت بتوليده من جوجل شيتس
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=196238973&single=true&output=csv';
 
-    function verifyCertificate() {
-        const inputRef = document.getElementById('refInput').value.trim();
-        const resultDiv = document.getElementById('result');
-        
-        if(!inputRef) {
-            alert('الرجاء إدخال الرقم المرجعي');
-            return;
-        }
+    function verifyCertificate() {
+        const inputRef = document.getElementById('refInput').value.trim();
+        const resultDiv = document.getElementById('result');
+        
+        if(!inputRef) {
+            alert('الرجاء إدخال الرقم المرجعي');
+            return;
+        }
 
-        resultDiv.style.display = 'none';
-        resultDiv.innerHTML = 'جاري التحقق...';
-        resultDiv.style.display = 'block';
+        resultDiv.style.display = 'none';
+        resultDiv.innerHTML = 'جاري التحقق...';
+        resultDiv.style.display = 'block';
 
-        Papa.parse(csvUrl, {
-            download: true,
-            header: true,
-            complete: function(results) {
-                const data = results.data;
-                // البحث عن السجل المطابق للرقم المرجعي
-                const record = data.find(row => row.RefNumber === inputRef);
+        Papa.parse(csvUrl, {
+            download: true,
+            header: true,
+            complete: function(results) {
+                const data = results.data;
+                const record = data.find(row => row.RefNumber === inputRef);
 
-                if(record) {
-                    resultDiv.innerHTML = `
-                        <span class="success-icon">✓ شهادة موثقة ومعتمدة</span>
-                        <div class="result-item"><strong>الاسم الكامل:</strong> ${record.StudentName}</div>
-                        <div class="result-item"><strong>الدولة:</strong> ${record.Country}</div>
-                        <div class="result-item"><strong>اسم البرنامج التدريبي:</strong> ${record.CourseName}</div>
-                        <div class="result-item"><strong>مسمى الشهادة:</strong> ${record.CertificateType}</div>
-                        <div class="result-item"><strong>صادرة بتوقيع المدرب:</strong> ${record.Signatory}</div>
-                    `;
-                    resultDiv.style.background = '#e8f4fd';
-                } else {
-                    resultDiv.innerHTML = `<p style="color: red; font-weight: bold; margin: 0;">❌ الرقم المرجعي غير صحيح أو غير مدرج في السجلات.</p>`;
-                    resultDiv.style.background = '#fde8e8';
-                }
-            },
-            error: function(err) {
-                resultDiv.innerHTML = `<p style="color: red; margin: 0;">حدث خطأ في الاتصال بقاعدة البيانات، يرجى المحاولة لاحقاً.</p>`;
-            }
-        });
-    }
+                if(record) {
+                    resultDiv.innerHTML = `
+                        <span class="success-icon">✓ شهادة موثقة ومعتمدة</span>
+                        <div class="result-item"><strong>الاسم الكامل:</strong> ${record.StudentName}</div>
+                        <div class="result-item"><strong>الدولة:</strong> ${record.Country}</div>
+                        <div class="result-item"><strong>اسم البرنامج التدريبي:</strong> ${record.CourseName}</div>
+                        <div class="result-item"><strong>مسمى الشهادة:</strong> ${record.CertificateType}</div>
+                        <div class="result-item"><strong>صادرة بتوقيع المدرب:</strong> ${record.Signatory}</div>
+                    `;
+                    resultDiv.style.background = '#e8f4fd';
+                    resultDiv.style.borderColor = '#c2e0f4';
+                } else {
+                    resultDiv.innerHTML = `<p style="color: #c53030; font-weight: bold; margin: 0; text-align: center;">❌ الرقم المرجعي غير صحيح أو غير مدرج في السجلات.</p>`;
+                    resultDiv.style.background = '#fff5f5';
+                    resultDiv.style.borderColor = '#feb2b2';
+                }
+            },
+            error: function(err) {
+                resultDiv.innerHTML = `<p style="color: #c53030; margin: 0; text-align: center;">حدث خطأ في الاتصال بقاعدة البيانات، يرجى المحاولة لاحقاً.</p>`;
+                resultDiv.style.background = '#fff5f5';
+                resultDiv.style.borderColor = '#feb2b2';
+            }
+        });
+    }
 </script>
 
 </body>
