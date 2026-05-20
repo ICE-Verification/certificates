@@ -14,13 +14,12 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); 
             display: flex; 
-            flex-direction: column; /* لضمان بقاء الأيقونات في الأسفل */
+            flex-direction: column; 
             justify-content: center; 
             align-items: center; 
             min-height: 100vh; 
             margin: 0; 
             padding: 20px; 
-            /* تأثير بصري للخلفية */
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
         }
@@ -31,20 +30,18 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* حاوية المحتوى الرئيسية */
         .container { 
             background: white; 
             padding: 40px; 
             border-radius: 15px; 
             box-shadow: 0 10px 30px rgba(30, 58, 138, 0.12);
             width: 100%; 
-            max-width: 600px; /* العرض الأساسي للتنسيق الذي تفضله */
+            max-width: 600px; 
             border-top: 6px solid #1e3a8a;
-            /* تأثير بصري عند ظهور الحاوية */
             animation: fadeIn 0.8s ease-out forwards;
             opacity: 0;
             transform: translateY(20px);
-            margin-bottom: auto; /* لدفع الأيقونات للأسفل */
+            margin-bottom: auto; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -57,20 +54,15 @@
             }
         }
         
-        /* تنسيقات الشعار والترويسة */
         .logo { 
             width: 150px; 
             max-width: 100%; 
             height: auto; 
             margin-bottom: 20px; 
             display: inline-block;
-            /* تأثير بصري للشعار */
             transition: transform 0.3s ease;
         }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
+        .logo:hover { transform: scale(1.05); }
 
         .college-title { 
             font-size: 22px; 
@@ -81,7 +73,6 @@
             text-align: center;
         }
         
-        /* تنسيق النص التعريفي - توسيع أفقي على الكمبيوتر */
         .description { 
             font-size: 14px; 
             color: #4a5568; 
@@ -92,12 +83,8 @@
             border-bottom: 1px solid #e2e8f0;
             width: 100%;
         }
-        .license-number { 
-            font-weight: bold; 
-            color: #c53030; 
-        }
+        .license-number { font-weight: bold; color: #c53030; }
 
-        /* تنسيقات نموذج التحقق */
         .verify-wrapper {
             width: 100%;
             display: flex;
@@ -105,17 +92,8 @@
             align-items: center;
         }
 
-        .verification-title {
-            font-size: 18px; 
-            color: #1e3a8a; 
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .verification-subtitle {
-            color: #718096; 
-            font-size: 14px; 
-            margin-bottom: 20px;
-        }
+        .verification-title { font-size: 18px; color: #1e3a8a; margin-bottom: 10px; font-weight: bold; }
+        .verification-subtitle { color: #718096; font-size: 14px; margin-bottom: 20px; }
         input { 
             width: 100%; 
             padding: 14px; 
@@ -126,31 +104,13 @@
             text-align: center; 
             transition: border-color 0.3s, box-shadow 0.3s; 
         }
-        input:focus { 
-            border-color: #1e3a8a; 
-            outline: none; 
-            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
-        }
+        input:focus { border-color: #1e3a8a; outline: none; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15); }
         button { 
-            background-color: #1e3a8a; 
-            color: white; 
-            border: none; 
-            padding: 14px 24px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-size: 16px; 
-            width: 100%; 
-            font-weight: bold; 
-            transition: background-color 0.3s, transform 0.1s; 
+            background-color: #1e3a8a; color: white; border: none; padding: 14px 24px; border-radius: 8px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; transition: background-color 0.3s, transform 0.1s; 
         }
-        button:hover { 
-            background-color: #152b69; 
-        }
-        button:active {
-            transform: scale(0.98);
-        }
+        button:hover { background-color: #152b69; }
+        button:active { transform: scale(0.98); }
         
-        /* تنسيقات صندوق النتيجة - حل مشكلة الأسطر المتعددة */
         #result { 
             margin-top: 25px; 
             text-align: right; 
@@ -160,27 +120,14 @@
             display: none; 
             border: 1px solid #c2e0f4; 
             width: 100%;
-            /* تأثير بصري لظهور النتيجة */
             animation: slideDown 0.4s ease-out forwards;
         }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
         .success-icon { color: #276749; font-weight: bold; font-size: 18px; margin-bottom: 15px; display: block; text-align: center;}
         
-        /* تعديل العناصر لعرضها على سطر واحد
-           استخدام Flexbox وتحديد عدم الالتفاف (nowrap)
-           وإخفاء النص الزائد إن وجد بنقاط (ellipsis)
-        */
+        /* تنسيق عناصر النتيجة الافتراضي (الكمبيوتر) - سطر واحد مع نقاط */
         .result-item { 
             margin-bottom: 10px; 
             font-size: 14px; 
@@ -188,89 +135,53 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            white-space: nowrap; /* يمنع نزول النص لسطر جديد */
-            overflow: hidden; /* يخفي أي نص يخرج عن الإطار */
-            text-overflow: ellipsis; /* يضيف ... إذا كان النص طويلًا جدًا */
+            white-space: nowrap; /* يمنع النزول لسطر جديد افتراضياً */
+            overflow: hidden; 
+            text-overflow: ellipsis; 
         }
-        
-        .result-item strong { 
-            color: #1a202c; 
-            margin-left: 8px; /* مسافة بين العنوان والقيمة (عكس الاتجاه بسبب RTL) */
-            flex-shrink: 0; /* يمنع تقلص العنوان */
-        }
+        .result-item strong { color: #1a202c; margin-left: 8px; flex-shrink: 0; }
+        .result-item span { overflow: hidden; text-overflow: ellipsis; text-align: right; }
 
-        .result-item span {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            direction: ltr; /* لتصحيح عرض الأسماء الإنجليزية الطويلة */
-            text-align: right;
-        }
-
-        /* تنسيقات أيقونات التواصل الاجتماعي الثابتة في الأسفل */
-        .social-icons-footer {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            width: 100%;
-            padding-bottom: 20px;
-        }
-        .social-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            color: white;
-            text-decoration: none;
-            font-size: 22px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .social-icon:hover {
-            transform: translateY(-4px) rotate(8deg); /* تأثير دوران خفيف */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+        .social-icons-footer { margin-top: 30px; display: flex; justify-content: center; gap: 20px; width: 100%; padding-bottom: 20px; }
+        .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; color: white; text-decoration: none; font-size: 22px; transition: transform 0.3s, box-shadow 0.3s; }
+        .social-icon:hover { transform: translateY(-4px) rotate(8deg); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .facebook-btn { background-color: #1877F2; }
         .whatsapp-btn { background-color: #25D366; }
 
         /* تعديلات الشاشات الكبيرة (الكمبيوتر) */
         @media (min-width: 800px) {
-            .container {
-                max-width: 800px; /* توسيع العرض الأفقي لتجنب التمرير */
-            }
-            .description {
-                text-align: justify; /* تحسين مظهر النص على الشاشات العريضة */
-            }
-            /* ترتيب أفقي لقسم التحقق */
-            .verify-wrapper {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-            }
-            .verify-wrapper > div {
-                width: 100%;
-            }
-            input {
-                width: calc(70% - 15px); /* يأخذ 70% من المساحة */
-                margin-bottom: 0;
-            }
-            button {
-                width: 30%; /* يأخذ 30% من المساحة */
-                margin-bottom: 0;
-            }
+            .container { max-width: 800px; }
+            .description { text-align: justify; }
+            .verify-wrapper { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .verify-wrapper > div { width: 100%; }
+            input { width: calc(70% - 15px); margin-bottom: 0; }
+            button { width: 30%; margin-bottom: 0; }
         }
 
-        /* تعديلات شاشات الموبايل */
+        /* تعديلات شاشات الموبايل (حل مشكلة النقاط) */
         @media (max-width: 480px) {
-            .container { padding: 30px 20px; }
+            .container { padding: 30px 15px; } /* تقليل الحشو قليلاً */
             .college-title { font-size: 19px; }
             .description { font-size: 13px; line-height: 1.7; }
             .logo { width: 130px; }
             input, button { font-size: 15px; padding: 12px; }
+            
+            /* الغاء خاصية السطر الواحد على الموبايل لضمان قراءة البيانات كاملة */
             .result-item {
-                font-size: 13px; /* تصغير الخط قليلًا على الموبايل لضمان بقائه على سطر واحد */
+                font-size: 13px; 
+                white-space: normal; /* السماح للنص بالنزول لسطر جديد */
+                flex-wrap: wrap; /* السماح للعناصر بالالتفاف داخل الحاوية */
+                align-items: flex-start; /* محاذاة العناوين للأعلى */
+            }
+            .result-item strong {
+                width: 100%; /* جعل العنوان يأخذ سطراً كاملاً إذا لزم الأمر */
+                margin-left: 0;
+                margin-bottom: 3px; /* مسافة صغيرة أسفل العنوان */
+            }
+            .result-item span {
+                width: 100%; /* النص يأخذ سطراً كاملاً وينزل لسطر جديد إذا كان طويلاً */
+                text-align: right;
+                color: #4a5568; /* لون أفتح قليلاً للنص لإبراز العنوان */
             }
         }
     </style>
@@ -316,7 +227,6 @@
 <script>
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=196238973&single=true&output=csv';
 
-    // إضافة خاصية الاستجابة لزر (Enter)
     document.getElementById("refInput").addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
@@ -345,6 +255,7 @@
                 const record = data.find(row => row.RefNumber === inputRef);
 
                 if(record) {
+                    // تم إبقاء الـ title لعرض النص كاملاً عند التمرير على الكمبيوتر
                     resultDiv.innerHTML = `
                         <span class="success-icon">✓ شهادة موثقة ومعتمدة</span>
                         <div class="result-item" title="${record.StudentName}"><strong>الاسم الكامل:</strong> <span>${record.StudentName}</span></div>
