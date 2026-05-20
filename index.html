@@ -14,81 +14,107 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); 
             display: flex; 
+            flex-direction: column; /* لضمان بقاء الأيقونات في الأسفل */
             justify-content: center; 
             align-items: center; 
             min-height: 100vh; 
             margin: 0; 
             padding: 20px; 
+            /* تأثير بصري للخلفية */
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
 
-        /* حاوية المحتوى الرئيسية - تم توسيعها لتناسب الكمبيوتر */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* حاوية المحتوى الرئيسية */
         .container { 
             background: white; 
             padding: 40px; 
             border-radius: 15px; 
             box-shadow: 0 10px 30px rgba(30, 58, 138, 0.12);
-            max-width: 950px; /* عرض أكبر للكمبيوتر */
             width: 100%; 
+            max-width: 600px; /* العرض الأساسي للتنسيق الذي تفضله */
             border-top: 6px solid #1e3a8a;
+            /* تأثير بصري عند ظهور الحاوية */
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            margin-bottom: auto; /* لدفع الأيقونات للأسفل */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* الغلاف الذي يضم القسمين */
-        .content-wrapper {
-            display: flex;
-            flex-direction: column; /* التصميم الافتراضي للجوال: فوق بعض */
-            gap: 30px;
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        /* تنسيقات قسم المعلومات (اليمين) */
-        .info-section {
-            text-align: center;
-        }
+        /* تنسيقات الشعار والترويسة */
         .logo { 
             width: 150px; 
             max-width: 100%; 
             height: auto; 
             margin-bottom: 20px; 
             display: inline-block;
+            /* تأثير بصري للشعار */
+            transition: transform 0.3s ease;
         }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
         .college-title { 
             font-size: 22px; 
             color: #1e3a8a; 
             font-weight: bold; 
             margin: 0 0 15px 0; 
             line-height: 1.4;
+            text-align: center;
         }
+        
+        /* تنسيق النص التعريفي - توسيع أفقي على الكمبيوتر */
         .description { 
             font-size: 14px; 
             color: #4a5568; 
             line-height: 1.9; 
-            margin-bottom: 20px; 
+            margin-bottom: 30px; 
+            text-align: center; 
             padding-bottom: 20px;
             border-bottom: 1px solid #e2e8f0;
+            width: 100%;
         }
-        .license-number { font-weight: bold; color: #c53030; }
+        .license-number { 
+            font-weight: bold; 
+            color: #c53030; 
+        }
 
-        /* تنسيقات قسم التحقق (اليسار) */
-        .verify-section {
-            background: #f8fafc;
-            padding: 30px 20px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
+        /* تنسيقات نموذج التحقق */
+        .verify-wrapper {
+            width: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            align-items: center;
         }
+
         .verification-title {
             font-size: 18px; 
             color: #1e3a8a; 
             margin-bottom: 10px;
             font-weight: bold;
-            text-align: center;
         }
         .verification-subtitle {
             color: #718096; 
             font-size: 14px; 
             margin-bottom: 20px;
-            text-align: center;
         }
         input { 
             width: 100%; 
@@ -115,29 +141,79 @@
             font-size: 16px; 
             width: 100%; 
             font-weight: bold; 
-            transition: background-color 0.3s; 
+            transition: background-color 0.3s, transform 0.1s; 
         }
-        button:hover { background-color: #152b69; }
+        button:hover { 
+            background-color: #152b69; 
+        }
+        button:active {
+            transform: scale(0.98);
+        }
         
-        /* تنسيقات النتيجة */
+        /* تنسيقات صندوق النتيجة - حل مشكلة الأسطر المتعددة */
         #result { 
-            margin-top: 20px; 
+            margin-top: 25px; 
             text-align: right; 
-            padding: 15px; 
+            padding: 20px; 
             background: #e8f4fd; 
             border-radius: 8px; 
             display: none; 
             border: 1px solid #c2e0f4; 
+            width: 100%;
+            /* تأثير بصري لظهور النتيجة */
+            animation: slideDown 0.4s ease-out forwards;
         }
-        .success-icon { color: #276749; font-weight: bold; font-size: 18px; margin-bottom: 15px; display: block; text-align: center;}
-        .result-item { margin-bottom: 10px; font-size: 14px; color: #2d3748;}
-        .result-item strong { color: #1a202c; }
 
-        /* تنسيقات أيقونات التواصل الاجتماعي */
-        .social-icons {
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon { color: #276749; font-weight: bold; font-size: 18px; margin-bottom: 15px; display: block; text-align: center;}
+        
+        /* تعديل العناصر لعرضها على سطر واحد
+           استخدام Flexbox وتحديد عدم الالتفاف (nowrap)
+           وإخفاء النص الزائد إن وجد بنقاط (ellipsis)
+        */
+        .result-item { 
+            margin-bottom: 10px; 
+            font-size: 14px; 
+            color: #2d3748;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            white-space: nowrap; /* يمنع نزول النص لسطر جديد */
+            overflow: hidden; /* يخفي أي نص يخرج عن الإطار */
+            text-overflow: ellipsis; /* يضيف ... إذا كان النص طويلًا جدًا */
+        }
+        
+        .result-item strong { 
+            color: #1a202c; 
+            margin-left: 8px; /* مسافة بين العنوان والقيمة (عكس الاتجاه بسبب RTL) */
+            flex-shrink: 0; /* يمنع تقلص العنوان */
+        }
+
+        .result-item span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            direction: ltr; /* لتصحيح عرض الأسماء الإنجليزية الطويلة */
+            text-align: right;
+        }
+
+        /* تنسيقات أيقونات التواصل الاجتماعي الثابتة في الأسفل */
+        .social-icons-footer {
+            margin-top: 30px;
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
+            width: 100%;
+            padding-bottom: 20px;
         }
         .social-icon {
             display: inline-flex;
@@ -152,93 +228,89 @@
             transition: transform 0.3s, box-shadow 0.3s;
         }
         .social-icon:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transform: translateY(-4px) rotate(8deg); /* تأثير دوران خفيف */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         .facebook-btn { background-color: #1877F2; }
         .whatsapp-btn { background-color: #25D366; }
 
-        /* -------------------------------------------
-           استجابة الشاشات الكبيرة (الكمبيوتر والآيباد)
-           ------------------------------------------- */
+        /* تعديلات الشاشات الكبيرة (الكمبيوتر) */
         @media (min-width: 800px) {
-            .content-wrapper {
-                flex-direction: row; /* جعل الأقسام جنباً إلى جنب */
-                align-items: stretch;
-            }
-            .info-section {
-                flex: 1.3; /* يأخذ مساحة أكبر قليلاً */
-                text-align: right; /* محاذاة النص لليمين */
-                padding-left: 30px;
-                border-left: 2px solid #edf2f7; /* خط فاصل بين القسمين */
-            }
-            .verify-section {
-                flex: 1; /* يأخذ المساحة المتبقية */
-                border: none;
-                background: transparent;
-                padding: 0 20px 0 0;
+            .container {
+                max-width: 800px; /* توسيع العرض الأفقي لتجنب التمرير */
             }
             .description {
-                text-align: justify;
-                border-bottom: none;
-                padding-bottom: 0;
+                text-align: justify; /* تحسين مظهر النص على الشاشات العريضة */
             }
-            .social-icons {
-                justify-content: flex-start; /* نقل الأيقونات لليمين على الكمبيوتر */
-                margin-top: 25px;
+            /* ترتيب أفقي لقسم التحقق */
+            .verify-wrapper {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            .verify-wrapper > div {
+                width: 100%;
+            }
+            input {
+                width: calc(70% - 15px); /* يأخذ 70% من المساحة */
+                margin-bottom: 0;
+            }
+            button {
+                width: 30%; /* يأخذ 30% من المساحة */
+                margin-bottom: 0;
             }
         }
 
-        /* استجابة شاشات الجوال الصغيرة جداً */
+        /* تعديلات شاشات الموبايل */
         @media (max-width: 480px) {
             .container { padding: 30px 20px; }
             .college-title { font-size: 19px; }
-            .description { font-size: 13px; }
+            .description { font-size: 13px; line-height: 1.7; }
             .logo { width: 130px; }
+            input, button { font-size: 15px; padding: 12px; }
+            .result-item {
+                font-size: 13px; /* تصغير الخط قليلًا على الموبايل لضمان بقائه على سطر واحد */
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="content-wrapper">
-        
-        <div class="info-section">
-            <img src="logo.png" alt="شعار كلية ريادة الأعمال الدولية" class="logo">
-            <h1 class="college-title">كلية ريادة الأعمال الدولية / إسطنبول</h1>
-            
-            <div class="description">
-                <strong>كلّيّة ريادة الأعمال الدوليّةَ I.C.E</strong><br>
-                مرخّصة لدى الجمهوريّة التركيّة – إسطنبول برقم <span class="license-number">5-368979</span><br>
-                لتقديم كافة أنواع الخدمات التعليمية والتدريبيّة، وتقديم خدمات التعليم والتدريب عن بعد.<br>
-                وإبرام الاتفاقيّات مع المؤسّسات التعليميّة المحليّة والدولية لتعليم الطلاب المحلّيّين والأجانب.<br>
-                وتقديم الخدمات الاستشاريّة التعليميّة للطلاب في الداخل والخارج فيما يتعلق بقضايا التعليم الدوليّ.<br>
-                وتنظيم الندوات والأنشطة التعليمية والتدريبيّة، وبرامج التبادل الطلابيّ في الخارج.<br>
-                وتقديم البرامج والاستشارات للأفراد والمؤسّسات في مجالات ريادة وتطوير الأعمال.<br>
-                وتقديم جميع أنواع أبحاث السوق وتحليل المشاريع للشركات المحلّيّة والأجنبيّة.
-            </div>
-
-            <div class="social-icons">
-                <a href="https://www.facebook.com/ICE.ShujaaAlFahd/" target="_blank" class="social-icon facebook-btn" title="تفضل بزيارة صفحتنا على فيسبوك">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="https://wa.me/905370485710" target="_blank" class="social-icon whatsapp-btn" title="تواصل معنا مباشرة عبر واتساب">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-            </div>
-        </div>
-
-        <div class="verify-section">
-            <div class="verification-title">نظام التحقق من الشهادات</div>
-            <div class="verification-subtitle">أدخل الرقم المرجعي للشهادة للتحقق من صحتها</div>
-            
-            <input type="text" id="refInput" placeholder="مثال: ICEPTAD26042">
-            <button onclick="verifyCertificate()">تحقق الآن</button>
-
-            <div id="result"></div>
-        </div>
-
+    <img src="logo.png" alt="شعار كلية ريادة الأعمال الدولية" class="logo">
+    <h1 class="college-title">كلية ريادة الأعمال الدولية / إسطنبول</h1>
+    
+    <div class="description">
+        <strong>كلّيّة ريادة الأعمال الدوليّةَ I.C.E</strong><br>
+        مرخّصة لدى الجمهوريّة التركيّة – إسطنبول برقم <span class="license-number">5-368979</span><br>
+        لتقديم كافة أنواع الخدمات التعليمية والتدريبيّة، وتقديم خدمات التعليم والتدريب عن بعد.<br>
+        وإبرام الاتفاقيّات مع المؤسّسات التعليميّة المحليّة والدولية لتعليم الطلاب المحلّيّين والأجانب.<br>
+        وتقديم الخدمات الاستشاريّة التعليميّة للطلاب في الداخل والخارج فيما يتعلق بقضايا التعليم الدوليّ.<br>
+        وتنظيم الندوات والأنشطة التعليمية والتدريبيّة، وبرامج التبادل الطلابيّ في الخارج.<br>
+        وتقديم البرامج والاستشارات للأفراد والمؤسّسات في مجالات ريادة وتطوير الأعمال.<br>
+        وتقديم جميع أنواع أبحاث السوق وتحليل المشاريع للشركات المحلّيّة والأجنبيّة.
     </div>
+
+    <div style="width: 100%; text-align: center;">
+        <div class="verification-title">نظام التحقق من الشهادات</div>
+        <div class="verification-subtitle">أدخل الرقم المرجعي للشهادة للتحقق من صحتها</div>
+    </div>
+    
+    <div class="verify-wrapper">
+        <input type="text" id="refInput" placeholder="مثال: ICEPTAD26042">
+        <button onclick="verifyCertificate()">تحقق الآن</button>
+        <div id="result"></div>
+    </div>
+</div>
+
+<div class="social-icons-footer">
+    <a href="https://www.facebook.com/ICE.ShujaaAlFahd/" target="_blank" class="social-icon facebook-btn" title="تفضل بزيارة صفحتنا على فيسبوك">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://wa.me/905370485710" target="_blank" class="social-icon whatsapp-btn" title="تواصل معنا مباشرة عبر واتساب">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 </div>
 
 <script>
@@ -247,8 +319,8 @@
     // إضافة خاصية الاستجابة لزر (Enter)
     document.getElementById("refInput").addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
-            event.preventDefault(); // منع أي سلوك افتراضي للمتصفح
-            verifyCertificate(); // استدعاء دالة التحقق
+            event.preventDefault();
+            verifyCertificate();
         }
     });
 
@@ -275,11 +347,11 @@
                 if(record) {
                     resultDiv.innerHTML = `
                         <span class="success-icon">✓ شهادة موثقة ومعتمدة</span>
-                        <div class="result-item"><strong>الاسم الكامل:</strong> ${record.StudentName}</div>
-                        <div class="result-item"><strong>الدولة:</strong> ${record.Country}</div>
-                        <div class="result-item"><strong>اسم البرنامج التدريبي:</strong> ${record.CourseName}</div>
-                        <div class="result-item"><strong>مسمى الشهادة:</strong> ${record.CertificateType}</div>
-                        <div class="result-item"><strong>صادرة بتوقيع المدرب:</strong> ${record.Signatory}</div>
+                        <div class="result-item" title="${record.StudentName}"><strong>الاسم الكامل:</strong> <span>${record.StudentName}</span></div>
+                        <div class="result-item" title="${record.Country}"><strong>الدولة:</strong> <span>${record.Country}</span></div>
+                        <div class="result-item" title="${record.CourseName}"><strong>اسم البرنامج التدريبي:</strong> <span>${record.CourseName}</span></div>
+                        <div class="result-item" title="${record.CertificateType}"><strong>مسمى الشهادة:</strong> <span>${record.CertificateType}</span></div>
+                        <div class="result-item" title="${record.Signatory}"><strong>صادرة بتوقيع المدرب:</strong> <span>${record.Signatory}</span></div>
                     `;
                     resultDiv.style.background = '#e8f4fd';
                     resultDiv.style.borderColor = '#c2e0f4';
