@@ -7,10 +7,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* إعدادات عامة لضمان تجاوب المقاسات */
+        /* إعدادات عامة */
         * { box-sizing: border-box; }
         
-        /* تنسيق الخلفية المريحة المستوحاة من الشعار */
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); 
@@ -19,24 +18,33 @@
             align-items: center; 
             min-height: 100vh; 
             margin: 0; 
-            padding: 15px; 
+            padding: 20px; 
         }
 
-        /* حاوية المحتوى الرئيسية */
+        /* حاوية المحتوى الرئيسية - تم توسيعها لتناسب الكمبيوتر */
         .container { 
             background: white; 
-            padding: 40px 30px; 
+            padding: 40px; 
             border-radius: 15px; 
             box-shadow: 0 10px 30px rgba(30, 58, 138, 0.12);
-            text-align: center; 
-            max-width: 550px; 
+            max-width: 950px; /* عرض أكبر للكمبيوتر */
             width: 100%; 
             border-top: 6px solid #1e3a8a;
         }
+
+        /* الغلاف الذي يضم القسمين */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column; /* التصميم الافتراضي للجوال: فوق بعض */
+            gap: 30px;
+        }
         
-        /* تنسيقات الشعار والترويسة */
+        /* تنسيقات قسم المعلومات (اليمين) */
+        .info-section {
+            text-align: center;
+        }
         .logo { 
-            width: 160px; 
+            width: 150px; 
             max-width: 100%; 
             height: auto; 
             margin-bottom: 20px; 
@@ -49,33 +57,38 @@
             margin: 0 0 15px 0; 
             line-height: 1.4;
         }
-        
-        /* تنسيق النص التعريفي */
         .description { 
             font-size: 14px; 
             color: #4a5568; 
             line-height: 1.9; 
-            margin-bottom: 30px; 
-            text-align: center; 
+            margin-bottom: 20px; 
             padding-bottom: 20px;
             border-bottom: 1px solid #e2e8f0;
         }
-        .license-number { 
-            font-weight: bold; 
-            color: #c53030; 
-        }
+        .license-number { font-weight: bold; color: #c53030; }
 
-        /* تنسيقات نموذج التحقق */
+        /* تنسيقات قسم التحقق (اليسار) */
+        .verify-section {
+            background: #f8fafc;
+            padding: 30px 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
         .verification-title {
             font-size: 18px; 
             color: #1e3a8a; 
             margin-bottom: 10px;
             font-weight: bold;
+            text-align: center;
         }
         .verification-subtitle {
             color: #718096; 
             font-size: 14px; 
             margin-bottom: 20px;
+            text-align: center;
         }
         input { 
             width: 100%; 
@@ -104,32 +117,27 @@
             font-weight: bold; 
             transition: background-color 0.3s; 
         }
-        button:hover { 
-            background-color: #152b69; 
-        }
+        button:hover { background-color: #152b69; }
         
-        /* تنسيقات صندوق النتيجة */
+        /* تنسيقات النتيجة */
         #result { 
-            margin-top: 25px; 
+            margin-top: 20px; 
             text-align: right; 
-            padding: 20px; 
+            padding: 15px; 
             background: #e8f4fd; 
             border-radius: 8px; 
             display: none; 
             border: 1px solid #c2e0f4; 
         }
         .success-icon { color: #276749; font-weight: bold; font-size: 18px; margin-bottom: 15px; display: block; text-align: center;}
-        .result-item { margin-bottom: 10px; font-size: 15px; color: #2d3748;}
+        .result-item { margin-bottom: 10px; font-size: 14px; color: #2d3748;}
         .result-item strong { color: #1a202c; }
 
-        /* تنسيقات أيقونات التواصل الاجتماعي المستحدثة */
+        /* تنسيقات أيقونات التواصل الاجتماعي */
         .social-icons {
-            margin-top: 30px;
-            padding-top: 25px;
-            border-top: 1px solid #e2e8f0;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
         }
         .social-icon {
             display: inline-flex;
@@ -150,55 +158,99 @@
         .facebook-btn { background-color: #1877F2; }
         .whatsapp-btn { background-color: #25D366; }
 
-        /* تعديلات خاصة بشاشات الموبايل (التجاوب) */
+        /* -------------------------------------------
+           استجابة الشاشات الكبيرة (الكمبيوتر والآيباد)
+           ------------------------------------------- */
+        @media (min-width: 800px) {
+            .content-wrapper {
+                flex-direction: row; /* جعل الأقسام جنباً إلى جنب */
+                align-items: stretch;
+            }
+            .info-section {
+                flex: 1.3; /* يأخذ مساحة أكبر قليلاً */
+                text-align: right; /* محاذاة النص لليمين */
+                padding-left: 30px;
+                border-left: 2px solid #edf2f7; /* خط فاصل بين القسمين */
+            }
+            .verify-section {
+                flex: 1; /* يأخذ المساحة المتبقية */
+                border: none;
+                background: transparent;
+                padding: 0 20px 0 0;
+            }
+            .description {
+                text-align: justify;
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+            .social-icons {
+                justify-content: flex-start; /* نقل الأيقونات لليمين على الكمبيوتر */
+                margin-top: 25px;
+            }
+        }
+
+        /* استجابة شاشات الجوال الصغيرة جداً */
         @media (max-width: 480px) {
             .container { padding: 30px 20px; }
             .college-title { font-size: 19px; }
-            .description { font-size: 13px; line-height: 1.7; }
+            .description { font-size: 13px; }
             .logo { width: 130px; }
-            input, button { font-size: 15px; padding: 12px; }
-            .social-icon { width: 40px; height: 40px; font-size: 20px; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="logo.png" alt="شعار كلية ريادة الأعمال الدولية" class="logo">
-    <h1 class="college-title">كلية ريادة الأعمال الدولية / إسطنبول</h1>
-    
-    <div class="description">
-        <strong>كلّيّة ريادة الأعمال الدوليّةَ I.C.E</strong><br>
-        مرخّصة لدى الجمهوريّة التركيّة – إسطنبول برقم <span class="license-number">5-368979</span><br>
-        لتقديم كافة أنواع الخدمات التعليمية والتدريبيّة، وتقديم خدمات التعليم والتدريب عن بعد.<br>
-        وإبرام الاتفاقيّات مع المؤسّسات التعليميّة المحليّة والدولية لتعليم الطلاب المحلّيّين والأجانب.<br>
-        وتقديم الخدمات الاستشاريّة التعليميّة للطلاب في الداخل والخارج فيما يتعلق بقضايا التعليم الدوليّ.<br>
-        وتنظيم الندوات والأنشطة التعليمية والتدريبيّة، وبرامج التبادل الطلابيّ في الخارج.<br>
-        وتقديم البرامج والاستشارات للأفراد والمؤسّسات في مجالات ريادة وتطوير الأعمال.<br>
-        وتقديم جميع أنواع أبحاث السوق وتحليل المشاريع للشركات المحلّيّة والأجنبيّة.
-    </div>
+    <div class="content-wrapper">
+        
+        <div class="info-section">
+            <img src="logo.png" alt="شعار كلية ريادة الأعمال الدولية" class="logo">
+            <h1 class="college-title">كلية ريادة الأعمال الدولية / إسطنبول</h1>
+            
+            <div class="description">
+                <strong>كلّيّة ريادة الأعمال الدوليّةَ I.C.E</strong><br>
+                مرخّصة لدى الجمهوريّة التركيّة – إسطنبول برقم <span class="license-number">5-368979</span><br>
+                لتقديم كافة أنواع الخدمات التعليمية والتدريبيّة، وتقديم خدمات التعليم والتدريب عن بعد.<br>
+                وإبرام الاتفاقيّات مع المؤسّسات التعليميّة المحليّة والدولية لتعليم الطلاب المحلّيّين والأجانب.<br>
+                وتقديم الخدمات الاستشاريّة التعليميّة للطلاب في الداخل والخارج فيما يتعلق بقضايا التعليم الدوليّ.<br>
+                وتنظيم الندوات والأنشطة التعليمية والتدريبيّة، وبرامج التبادل الطلابيّ في الخارج.<br>
+                وتقديم البرامج والاستشارات للأفراد والمؤسّسات في مجالات ريادة وتطوير الأعمال.<br>
+                وتقديم جميع أنواع أبحاث السوق وتحليل المشاريع للشركات المحلّيّة والأجنبيّة.
+            </div>
 
-    <div class="verification-title">نظام التحقق من الشهادات</div>
-    <div class="verification-subtitle">أدخل الرقم المرجعي للشهادة للتحقق من صحتها</div>
-    
-    <input type="text" id="refInput" placeholder="مثال: ICEPTAD26042">
-    <button onclick="verifyCertificate()">تحقق الآن</button>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/ICE.ShujaaAlFahd/" target="_blank" class="social-icon facebook-btn" title="تفضل بزيارة صفحتنا على فيسبوك">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://wa.me/905370485710" target="_blank" class="social-icon whatsapp-btn" title="تواصل معنا مباشرة عبر واتساب">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
 
-    <div id="result"></div>
+        <div class="verify-section">
+            <div class="verification-title">نظام التحقق من الشهادات</div>
+            <div class="verification-subtitle">أدخل الرقم المرجعي للشهادة للتحقق من صحتها</div>
+            
+            <input type="text" id="refInput" placeholder="مثال: ICEPTAD26042">
+            <button onclick="verifyCertificate()">تحقق الآن</button>
 
-    <div class="social-icons">
-        <a href="https://www.facebook.com/ICE.ShujaaAlFahd/" target="_blank" class="social-icon facebook-btn" title="تفضل بزيارة صفحتنا على فيسبوك">
-            <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="https://wa.me/905370485710" target="_blank" class="social-icon whatsapp-btn" title="تواصل معنا مباشرة عبر واتساب">
-            <i class="fab fa-whatsapp"></i>
-        </a>
+            <div id="result"></div>
+        </div>
+
     </div>
 </div>
 
 <script>
-    // رابط ملف الـ CSV الذي قمت بتوليده من جوجل شيتس
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=196238973&single=true&output=csv';
+
+    // إضافة خاصية الاستجابة لزر (Enter)
+    document.getElementById("refInput").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // منع أي سلوك افتراضي للمتصفح
+            verifyCertificate(); // استدعاء دالة التحقق
+        }
+    });
 
     function verifyCertificate() {
         const inputRef = document.getElementById('refInput').value.trim();
