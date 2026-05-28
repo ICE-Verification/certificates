@@ -1,3 +1,11 @@
+فكرة ممتازة جداً! هذا التعديل سيحسن من تجربة الزائر (User Experience) بشكل كبير جداً، ولن يعاني أي شخص يكتب الرمز سواء نسي تشغيل زر الأحرف الكبيرة (Caps Lock) في لوحة المفاتيح، أو كتبه بأحرف صغيرة من الجوال.
+
+**كيف تمت برمجتها الآن؟**
+لقد قمت بإضافة دالة `toUpperCase()` البرمجية. وظيفتها أن تأخذ الرمز الذي يكتبه المستخدم (مهما كانت حالة أحرفه)، وتأخذ الرمز المخزن في قاعدة بياناتك، وتحولهما معاً في "الخلفية" إلى أحرف كبيرة (Capital) لمطابقتهما. هكذا سيتطابق `iceptaa26042` مع `ICEPTAA26042` دائماً.
+
+إليك الكود النهائي المحدث بالكامل مع هذه الميزة، انسخه واستبدله في ملف `index.html`:
+
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -5,18 +13,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نظام التحقق من الشهادات | International College of Entrepreneurship</title>
     
+    <!-- استدعاء مكتبة PapaParse لقراءة ملفات Google Sheets -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <!-- استدعاء مكتبة FontAwesome لأيقونات التواصل الاجتماعي وأيقونة الـ PDF -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- إعدادات المعاينة لوسائل التواصل الاجتماعي (واتساب، فيسبوك، تيليجرام وغيرها) -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="نظام التحقق من الشهادات | International College of Entrepreneurship">
-    <meta property="og:description" content="البوابة الرسمية للتحقق من صحة الشهادات والدبلومات الصادرة عن كلية ريادة الأعمال الدولية (I.C.E) في إسطنبول.">
+    <meta property="og:description" content="البوابة الرسمية للتحقق من صحة الشهادات والدبلومات الصادرة عن كلية ريادة الأعمال الدولية I.C.E في إسطنبول.">
     <meta property="og:image" content="https://ice-certificates.online/logo.png">
     <meta property="og:url" content="https://ice-certificates.online/">
 
+    <!-- إعدادات المعاينة لمنصة إكس (تويتر سابقاً) -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="نظام التحقق من الشهادات | International College of Entrepreneurship">
-    <meta name="twitter:description" content="البوابة الرسمية للتحقق من صحة الشهادات والدبلومات الصادرة عن كلية ريادة الأعمال الدولية (I.C.E) في إسطنبول.">
+    <meta name="twitter:description" content="البوابة الرسمية للتحقق من صحة الشهادات والدبلومات الصادرة عن كلية ريادة الأعمال الدولية I.C.E في إسطنبول.">
     <meta name="twitter:image" content="https://ice-certificates.online/logo.png">
 
     <style>
@@ -260,7 +272,8 @@
     });
 
     function verifyCertificate() {
-        const inputRef = document.getElementById('refInput').value.trim();
+        // تحويل القيمة المدخلة من المستخدم إلى أحرف كبيرة مباشرة لتجاهل حالة الأحرف
+        const inputRef = document.getElementById('refInput').value.trim().toUpperCase();
         const resultDiv = document.getElementById('result');
         
         if(!inputRef) {
@@ -277,7 +290,9 @@
             header: true,
             complete: function(results) {
                 const data = results.data;
-                const record = data.find(row => row.RefNumber === inputRef);
+                
+                // البحث في البيانات مع تحويل رقم السجل في القاعدة أيضاً إلى أحرف كبيرة للمطابقة الدقيقة
+                const record = data.find(row => row.RefNumber && row.RefNumber.trim().toUpperCase() === inputRef);
 
                 if(record) {
                     // بناء النتيجة الأساسية
@@ -321,3 +336,5 @@
 
 </body>
 </html>
+
+```
