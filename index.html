@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نظام التحقق من الشهادات | International College of Entrepreneurship</title>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <meta property="og:type" content="website">
-    <meta property="og:title" content="نظام التحقق من الشهادات | International College of Entrepreneurship I.C.E">
-    <meta property="og:description" content="البوابة الرسمية للتحقق من صحة الشهادات والدبلومات الصادرة عن كلية ريادة الأعمال الدولية I.C.E في إسطنبول.">
+    <meta property="og:title" content="نظام التحقق من الشهادات | International College of Entrepreneurship">
+    <meta property="og:description" content="البوابة الرسمية للتحقق من صحة الشهادات والدبلومات الصادرة عن كلية ريادة الأعمال الدولية (I.C.E) في إسطنبول.">
     <meta property="og:image" content="https://ice-certificates.online/logo.png">
     <meta property="og:url" content="https://ice-certificates.online/">
 
@@ -16,6 +18,7 @@
     <meta name="twitter:title" content="نظام التحقق من الشهادات | International College of Entrepreneurship">
     <meta name="twitter:description" content="البوابة الرسمية للتحقق من صحة الشهادات والدبلومات الصادرة عن كلية ريادة الأعمال الدولية (I.C.E) في إسطنبول.">
     <meta name="twitter:image" content="https://ice-certificates.online/logo.png">
+
     <style>
         /* إعدادات عامة */
         * { box-sizing: border-box; }
@@ -58,10 +61,7 @@
         }
 
         @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .logo { 
@@ -104,6 +104,7 @@
 
         .verification-title { font-size: 18px; color: #1e3a8a; margin-bottom: 10px; font-weight: bold; }
         .verification-subtitle { color: #718096; font-size: 14px; margin-bottom: 20px; }
+        
         input { 
             width: 100%; 
             padding: 14px; 
@@ -115,6 +116,7 @@
             transition: border-color 0.3s, box-shadow 0.3s; 
         }
         input:focus { border-color: #1e3a8a; outline: none; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15); }
+        
         button { 
             background-color: #1e3a8a; color: white; border: none; padding: 14px 24px; border-radius: 8px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; transition: background-color 0.3s, transform 0.1s; 
         }
@@ -137,7 +139,7 @@
 
         .success-icon { color: #276749; font-weight: bold; font-size: 18px; margin-bottom: 15px; display: block; text-align: center;}
         
-        /* تنسيق عناصر النتيجة الافتراضي (الكمبيوتر) - سطر واحد مع نقاط */
+        /* تنسيق عناصر النتيجة الافتراضي (الكمبيوتر) */
         .result-item { 
             margin-bottom: 10px; 
             font-size: 14px; 
@@ -145,13 +147,33 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            white-space: nowrap; /* يمنع النزول لسطر جديد افتراضياً */
+            white-space: nowrap; 
             overflow: hidden; 
             text-overflow: ellipsis; 
         }
         .result-item strong { color: #1a202c; margin-left: 8px; flex-shrink: 0; }
         .result-item span { overflow: hidden; text-overflow: ellipsis; text-align: right; }
 
+        /* تنسيق زر تحميل الـ PDF */
+        .pdf-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #276749;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background-color 0.3s, transform 0.2s;
+            font-size: 15px;
+            width: 100%;
+        }
+        .pdf-btn:hover { background-color: #1c4f37; transform: translateY(-2px); }
+        .pdf-btn i { margin-left: 8px; font-size: 18px; }
+
+        /* تنسيقات أيقونات التواصل الاجتماعي الثابتة في الأسفل */
         .social-icons-footer { margin-top: 30px; display: flex; justify-content: center; gap: 20px; width: 100%; padding-bottom: 20px; }
         .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; color: white; text-decoration: none; font-size: 22px; transition: transform 0.3s, box-shadow 0.3s; }
         .social-icon:hover { transform: translateY(-4px) rotate(8deg); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
@@ -170,29 +192,20 @@
 
         /* تعديلات شاشات الموبايل (حل مشكلة النقاط) */
         @media (max-width: 480px) {
-            .container { padding: 30px 15px; } /* تقليل الحشو قليلاً */
+            .container { padding: 30px 15px; } 
             .college-title { font-size: 19px; }
             .description { font-size: 13px; line-height: 1.7; }
             .logo { width: 130px; }
             input, button { font-size: 15px; padding: 12px; }
             
-            /* الغاء خاصية السطر الواحد على الموبايل لضمان قراءة البيانات كاملة */
             .result-item {
                 font-size: 13px; 
-                white-space: normal; /* السماح للنص بالنزول لسطر جديد */
-                flex-wrap: wrap; /* السماح للعناصر بالالتفاف داخل الحاوية */
-                align-items: flex-start; /* محاذاة العناوين للأعلى */
+                white-space: normal; 
+                flex-wrap: wrap; 
+                align-items: flex-start; 
             }
-            .result-item strong {
-                width: 100%; /* جعل العنوان يأخذ سطراً كاملاً إذا لزم الأمر */
-                margin-left: 0;
-                margin-bottom: 3px; /* مسافة صغيرة أسفل العنوان */
-            }
-            .result-item span {
-                width: 100%; /* النص يأخذ سطراً كاملاً وينزل لسطر جديد إذا كان طويلاً */
-                text-align: right;
-                color: #4a5568; /* لون أفتح قليلاً للنص لإبراز العنوان */
-            }
+            .result-item strong { width: 100%; margin-left: 0; margin-bottom: 3px; }
+            .result-item span { width: 100%; text-align: right; color: #4a5568; }
         }
     </style>
 </head>
@@ -235,8 +248,10 @@
 </div>
 
 <script>
+    // رابط ملف الـ CSV الذي قمت بتوليده من جوجل شيتس
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=196238973&single=true&output=csv';
 
+    // إضافة خاصية الاستجابة لزر (Enter)
     document.getElementById("refInput").addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
@@ -265,8 +280,8 @@
                 const record = data.find(row => row.RefNumber === inputRef);
 
                 if(record) {
-                    // تم إبقاء الـ title لعرض النص كاملاً عند التمرير على الكمبيوتر
-                    resultDiv.innerHTML = `
+                    // بناء النتيجة الأساسية
+                    let resultHTML = `
                         <span class="success-icon">✓ شهادة موثقة ومعتمدة</span>
                         <div class="result-item" title="${record.StudentName}"><strong>الاسم الكامل:</strong> <span>${record.StudentName}</span></div>
                         <div class="result-item" title="${record.Country}"><strong>الدولة:</strong> <span>${record.Country}</span></div>
@@ -274,6 +289,19 @@
                         <div class="result-item" title="${record.CertificateType}"><strong>مسمى الشهادة:</strong> <span>${record.CertificateType}</span></div>
                         <div class="result-item" title="${record.Signatory}"><strong>صادرة بتوقيع المدرب:</strong> <span>${record.Signatory}</span></div>
                     `;
+
+                    // التحقق من وجود رابط الشهادة وإضافة الزر
+                    if (record.CertificateLink && record.CertificateLink.trim() !== '') {
+                        resultHTML += `
+                            <div style="margin-top: 15px; border-top: 1px solid #c2e0f4; padding-top: 15px;">
+                                <a href="${record.CertificateLink.trim()}" target="_blank" class="pdf-btn">
+                                    <i class="fas fa-file-pdf"></i> عرض وتحميل الشهادة الأصلية
+                                </a>
+                            </div>
+                        `;
+                    }
+
+                    resultDiv.innerHTML = resultHTML;
                     resultDiv.style.background = '#e8f4fd';
                     resultDiv.style.borderColor = '#c2e0f4';
                 } else {
