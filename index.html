@@ -3,343 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام التحقق من الشهادات | International College of Entrepreneurship</title>
+    <title>بوابة التحقق الإلكتروني | International College of Entrepreneurship</title>
     
-    <!-- استدعاء مكتبة PapaParse لقراءة ملفات Google Sheets -->
+    <!-- استدعاء المكتبات -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-    <!-- استدعاء مكتبة FontAwesome لأيقونات التواصل الاجتماعي وأيقونة الـ PDF -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- إعدادات المعاينة لوسائل التواصل الاجتماعي (واتساب، فيسبوك، تيليجرام وغيرها) -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="نظام التحقق من الشهادات | International College of Entrepreneurship">
-    <meta property="og:description" content="البوابة الرسمية للتحقق من صحة الشهادات والدبلومات الصادرة عن كلية ريادة الأعمال الدولية I.C.E في إسطنبول.">
-    <meta property="og:image" content="https://ice-certificates.online/logo.png">
-    <meta property="og:url" content="https://ice-certificates.online/">
-
-    <!-- إعدادات المعاينة لمنصة إكس (تويتر سابقاً) -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="نظام التحقق من الشهادات | International College of Entrepreneurship">
-    <meta name="twitter:description" content="البوابة الرسمية للتحقق من صحة الشهادات والدبلومات الصادرة عن كلية ريادة الأعمال الدولية I.C.E في إسطنبول.">
-    <meta name="twitter:image" content="https://ice-certificates.online/logo.png">
-
     <style>
         /* إعدادات عامة */
-        * { box-sizing: border-box; }
+        :root {
+            --primary-blue: #1e3a8a;
+            --primary-gold: #b8860b;
+            --bg-gradient-1: #f8fafc;
+            --bg-gradient-2: #e2e8f0;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            margin: 0; 
-            padding: 20px; 
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%); 
+            display: flex; flex-direction: column; align-items: center; 
+            min-height: 100vh; padding: 30px 15px;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* الحاوية الرئيسية */
+        .main-container { 
+            background: white; padding: 40px 30px; border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            width: 100%; max-width: 650px; 
+            border-top: 6px solid var(--primary-blue);
+            animation: fadeIn 0.6s ease-out forwards;
         }
 
-        .container { 
-            background: white; 
-            padding: 40px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(30, 58, 138, 0.12);
-            width: 100%; 
-            max-width: 600px; 
-            border-top: 6px solid #1e3a8a;
-            animation: fadeIn 0.8s ease-out forwards;
-            opacity: 0;
-            transform: translateY(20px);
-            margin-bottom: auto; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        .logo { 
-            width: 150px; 
-            max-width: 100%; 
-            height: auto; 
-            margin-bottom: 20px; 
-            display: inline-block;
-            transition: transform 0.3s ease;
-        }
-        .logo:hover { transform: scale(1.05); }
+        /* الترويسة */
+        .header-section { text-align: center; margin-bottom: 35px; }
+        .logo { width: 140px; margin-bottom: 15px; }
+        .college-title { font-size: 22px; color: var(--primary-blue); font-weight: bold; margin-bottom: 5px; }
+        .portal-subtitle { font-size: 15px; color: var(--text-gray); }
 
-        .college-title { 
-            font-size: 22px; 
-            color: #1e3a8a; 
-            font-weight: bold; 
-            margin: 0 0 15px 0; 
-            line-height: 1.4;
-            text-align: center;
+        /* نظام التبويبات (Segmented Control) */
+        .tabs-container {
+            display: flex; background: #f1f5f9; border-radius: 12px; padding: 5px; margin-bottom: 30px;
         }
-        
-        .description { 
-            font-size: 14px; 
-            color: #4a5568; 
-            line-height: 1.9; 
-            margin-bottom: 30px; 
-            text-align: center; 
-            padding-bottom: 20px;
-            border-bottom: 1px solid #e2e8f0;
-            width: 100%;
+        .tab-btn {
+            flex: 1; padding: 14px 10px; border: none; background: transparent; 
+            border-radius: 8px; font-size: 15px; font-weight: bold; color: var(--text-gray);
+            cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px;
         }
-        .license-number { font-weight: bold; color: #c53030; }
+        .tab-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+        .tab-btn:not(.active):hover { color: var(--text-dark); }
 
-        .verify-wrapper {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .verification-title { font-size: 18px; color: #1e3a8a; margin-bottom: 10px; font-weight: bold; }
-        .verification-subtitle { color: #718096; font-size: 14px; margin-bottom: 20px; }
+        /* أقسام البحث (مخفية افتراضياً وتظهر حسب التبويب) */
+        .search-section { display: none; animation: slideDown 0.4s ease-out forwards; }
+        .search-section.active { display: block; }
         
-        input { 
-            width: 100%; 
-            padding: 14px; 
-            margin-bottom: 15px; 
-            border: 2px solid #cbd5e0; 
-            border-radius: 8px; 
-            font-size: 16px; 
-            text-align: center; 
-            transition: border-color 0.3s, box-shadow 0.3s; 
-        }
-        input:focus { border-color: #1e3a8a; outline: none; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15); }
-        
-        button { 
-            background-color: #1e3a8a; color: white; border: none; padding: 14px 24px; border-radius: 8px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; transition: background-color 0.3s, transform 0.1s; 
-        }
-        button:hover { background-color: #152b69; }
-        button:active { transform: scale(0.98); }
-        
-        #result { 
-            margin-top: 25px; 
-            text-align: right; 
-            padding: 20px; 
-            background: #e8f4fd; 
-            border-radius: 8px; 
-            display: none; 
-            border: 1px solid #c2e0f4; 
-            width: 100%;
-            animation: slideDown 0.4s ease-out forwards;
-        }
-
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .success-icon { color: #276749; font-weight: bold; font-size: 18px; margin-bottom: 15px; display: block; text-align: center;}
+        .input-group { margin-bottom: 20px; }
+        .input-label { display: block; margin-bottom: 10px; font-size: 14px; color: var(--text-dark); font-weight: bold; text-align: right;}
         
-        /* تنسيق عناصر النتيجة الافتراضي (الكمبيوتر) */
-        .result-item { 
-            margin-bottom: 10px; 
-            font-size: 14px; 
-            color: #2d3748;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
+        input { 
+            width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 10px; 
+            font-size: 16px; text-align: center; transition: all 0.3s; background: #f8fafc;
         }
-        .result-item strong { color: #1a202c; margin-left: 8px; flex-shrink: 0; }
-        .result-item span { overflow: hidden; text-overflow: ellipsis; text-align: right; }
+        input:focus { border-color: var(--primary-blue); outline: none; background: white; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); }
+        
+        button.verify-submit-btn { 
+            background-color: var(--primary-blue); color: white; border: none; padding: 15px; 
+            border-radius: 10px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; 
+            transition: all 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        button.verify-submit-btn:hover { background-color: #152b69; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(30,58,138,0.2); }
+        button.verify-submit-btn.gold { background-color: var(--primary-gold); }
+        button.verify-submit-btn.gold:hover { background-color: #996515; box-shadow: 0 5px 15px rgba(184,134,11,0.2); }
 
-        /* تنسيق زر تحميل الـ PDF */
+        /* صندوق النتائج */
+        #result-box { margin-top: 30px; display: none; padding: 25px; border-radius: 12px; border: 1px solid transparent; width: 100%; }
+        
+        .result-item { margin-bottom: 12px; font-size: 15px; display: flex; align-items: flex-start; }
+        .result-item strong { margin-left: 10px; flex-shrink: 0; min-width: 120px; color: #1e293b;}
+        .result-item span { color: #475569; }
+
+        .status-badge { padding: 5px 12px; border-radius: 6px; font-weight: bold; font-size: 14px; display: inline-block; }
+        .status-active { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .status-expired { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
         .pdf-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #276749;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: background-color 0.3s, transform 0.2s;
-            font-size: 15px;
-            width: 100%;
+            display: inline-flex; align-items: center; justify-content: center; background-color: #059669; color: white;
+            padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 20px;
+            transition: all 0.3s; font-size: 15px; width: 100%;
         }
-        .pdf-btn:hover { background-color: #1c4f37; transform: translateY(-2px); }
-        .pdf-btn i { margin-left: 8px; font-size: 18px; }
+        .pdf-btn:hover { background-color: #047857; }
 
-        /* تنسيقات أيقونات التواصل الاجتماعي الثابتة في الأسفل */
-        .social-icons-footer { margin-top: 30px; display: flex; justify-content: center; gap: 20px; width: 100%; padding-bottom: 20px; }
-        .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; color: white; text-decoration: none; font-size: 22px; transition: transform 0.3s, box-shadow 0.3s; }
-        .social-icon:hover { transform: translateY(-4px) rotate(8deg); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        /* الفوتر وأيقونات التواصل */
+        .footer-section { margin-top: 30px; text-align: center; }
+        .social-icons { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
+        .social-icon { 
+            display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; 
+            border-radius: 50%; color: white; text-decoration: none; font-size: 18px; transition: transform 0.3s; 
+        }
+        .social-icon:hover { transform: translateY(-3px); }
         .facebook-btn { background-color: #1877F2; }
         .whatsapp-btn { background-color: #25D366; }
+        
+        .about-link { color: var(--text-gray); text-decoration: none; font-size: 14px; font-weight: bold; border-bottom: 1px solid var(--text-gray); transition: color 0.3s;}
+        .about-link:hover { color: var(--primary-blue); border-color: var(--primary-blue); }
 
-        /* تعديلات الشاشات الكبيرة (الكمبيوتر) */
-        @media (min-width: 800px) {
-            .container { max-width: 800px; }
-            .description { text-align: justify; }
-            .verify-wrapper { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 15px; }
-            .verify-wrapper > div { width: 100%; }
-            input { width: calc(70% - 15px); margin-bottom: 0; }
-            button { width: 30%; margin-bottom: 0; }
-        }
-
-        /* تعديلات شاشات الموبايل (حل مشكلة النقاط) */
         @media (max-width: 480px) {
-            .container { padding: 30px 15px; } 
+            .main-container { padding: 30px 20px; }
             .college-title { font-size: 19px; }
-            .description { font-size: 13px; line-height: 1.7; }
-            .logo { width: 130px; }
-            input, button { font-size: 15px; padding: 12px; }
-            
-            .result-item {
-                font-size: 13px; 
-                white-space: normal; 
-                flex-wrap: wrap; 
-                align-items: flex-start; 
-            }
-            .result-item strong { width: 100%; margin-left: 0; margin-bottom: 3px; }
-            .result-item span { width: 100%; text-align: right; color: #4a5568; }
+            .tab-btn { font-size: 13px; padding: 12px 5px; }
+            .result-item { flex-direction: column; }
+            .result-item strong { margin-bottom: 4px; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <img src="logo.png" alt="شعار كلية ريادة الأعمال الدولية" class="logo">
-    <h1 class="college-title">كلية ريادة الأعمال الدولية / إسطنبول</h1>
+<div class="main-container">
     
-    <div class="description">
-        <strong>كلّيّة ريادة الأعمال الدوليّةَ I.C.E</strong><br>
-        مرخّصة لدى الجمهوريّة التركيّة – إسطنبول برقم <span class="license-number">5-368979</span><br>
-        لتقديم كافة أنواع الخدمات التعليمية والتدريبيّة، وتقديم خدمات التعليم والتدريب عن بعد.<br>
-        وإبرام الاتفاقيّات مع المؤسّسات التعليميّة المحليّة والدولية لتعليم الطلاب المحلّيّين والأجانب.<br>
-        وتقديم الخدمات الاستشاريّة التعليميّة للطلاب في الداخل والخارج فيما يتعلق بقضايا التعليم الدوليّ.<br>
-        وتنظيم الندوات والأنشطة التعليمية والتدريبيّة، وبرامج التبادل الطلابيّ في الخارج.<br>
-        وتقديم البرامج والاستشارات للأفراد والمؤسّسات في مجالات ريادة وتطوير الأعمال.<br>
-        وتقديم جميع أنواع أبحاث السوق وتحليل المشاريع للشركات المحلّيّة والأجنبيّة.
+    <!-- الترويسة -->
+    <div class="header-section">
+        <img src="logo.png" alt="شعار الكلية" class="logo">
+        <h1 class="college-title">كلية ريادة الأعمال الدولية</h1>
+        <p class="portal-subtitle">البوابة الإلكترونية الموحدة للتحقق من الوثائق</p>
     </div>
 
-    <div style="width: 100%; text-align: center;">
-        <div class="verification-title">نظام التحقق من الشهادات</div>
-        <div class="verification-subtitle">أدخل الرقم المرجعي للشهادة للتحقق من صحتها</div>
+    <!-- التبويبات لاختيار نوع التحقق -->
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="switchTab('cert-tab')">
+            <i class="fas fa-graduation-cap"></i> الشهادات التدريبية
+        </button>
+        <button class="tab-btn" onclick="switchTab('partner-tab')">
+            <i class="fas fa-id-badge"></i> الاعتمادات والشراكات
+        </button>
     </div>
-    <div class="main-actions-container" style="display: flex; gap: 15px; justify-content: center; margin: 30px 0; flex-wrap: wrap;">
-    <a href="index.html" class="primary-btn" style="flex: 1; min-width: 250px; background-color: #1e3a8a; color: white; padding: 15px 20px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
-        <i class="fas fa-graduation-cap"></i> التحقق من الشهادات التدريبية
-    </a>
-    
-    <a href="partners.html" class="primary-btn" style="flex: 1; min-width: 250px; background-color: #b8860b; color: white; padding: 15px 20px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
-        <i class="fas fa-id-badge"></i> التحقق من الاعتمادات والشراكات
-    </a>
-</div>
-    <div class="verify-wrapper">
-        <input type="text" id="refInput" placeholder="مثال: ICEPTAD26042">
-        <button onclick="verifyCertificate()">تحقق الآن</button>
-        <div id="result"></div>
+
+    <!-- قسم التحقق من الشهادات -->
+    <div id="cert-tab" class="search-section active">
+        <div class="input-group">
+            <label class="input-label">الرقم المرجعي للشهادة:</label>
+            <input type="text" id="certInput" placeholder="مثال: ICE-PTAD-26-042" onkeypress="handleEnter(event, 'cert')">
+        </div>
+        <button class="verify-submit-btn" onclick="verifyCertificate()">
+            <i class="fas fa-search"></i> تحقق من الشهادة الآن
+        </button>
     </div>
+
+    <!-- قسم التحقق من الاعتمادات -->
+    <div id="partner-tab" class="search-section">
+        <div class="input-group">
+            <label class="input-label">اسم المدرب أو الشريك:</label>
+            <input type="text" id="partnerInput" placeholder="أدخل الاسم بالعربية أو الإنجليزية" onkeypress="handleEnter(event, 'partner')">
+        </div>
+        <button class="verify-submit-btn gold" onclick="verifyPartner()">
+            <i class="fas fa-search"></i> تحقق من الاعتماد الآن
+        </button>
+    </div>
+
+    <!-- صندوق عرض النتائج المشترك -->
+    <div id="result-box"></div>
+
 </div>
 
-<div class="social-icons-footer">
-    <a href="https://www.facebook.com/ICE.ShujaaAlFahd/" target="_blank" class="social-icon facebook-btn" title="تفضل بزيارة صفحتنا على فيسبوك">
-        <i class="fab fa-facebook-f"></i>
-    </a>
-    <a href="https://wa.me/905370485710" target="_blank" class="social-icon whatsapp-btn" title="تواصل معنا مباشرة عبر واتساب">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-</div>
-    <div style="text-align: center; margin-top: 15px;">
-    <a href="partners.html" style="color: #4a5568; text-decoration: none; font-size: 14px; font-weight: bold; border-bottom: 1px solid #4a5568;">
-        <i class="fas fa-id-badge"></i> للتحقق من الاعتمادات والشراكات، اضغط هنا
-    </a>
+<!-- الفوتر -->
+<div class="footer-section">
+    <div class="social-icons">
+        <a href="https://www.facebook.com/ICE.ShujaaAlFahd/" target="_blank" class="social-icon facebook-btn"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://wa.me/905370485710" target="_blank" class="social-icon whatsapp-btn"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    <a href="about.html" class="about-link"><i class="fas fa-info-circle"></i> تعرف على كلية ريادة الأعمال الدولية</a>
 </div>
 
 <script>
-    // رابط ملف الـ CSV الذي قمت بتوليده من جوجل شيتس
-    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=196238973&single=true&output=csv';
+    // روابط قواعد البيانات
+    const certCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=196238973&single=true&output=csv';
+    const partnerCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=522399146&single=true&output=csv';
 
-    // إضافة خاصية الاستجابة لزر (Enter)
-    document.getElementById("refInput").addEventListener("keypress", function(event) {
+    // دالة التبديل بين التبويبات
+    function switchTab(tabId) {
+        // إعادة تعيين الأزرار والأقسام
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.search-section').forEach(sec => sec.classList.remove('active'));
+        
+        // إخفاء صندوق النتائج عند التبديل
+        document.getElementById('result-box').style.display = 'none';
+        document.getElementById('certInput').value = '';
+        document.getElementById('partnerInput').value = '';
+
+        // تنشيط التبويب المختار
+        event.currentTarget.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    // دالة لدعم زر Enter في لوحة المفاتيح
+    function handleEnter(event, type) {
         if (event.key === "Enter") {
             event.preventDefault();
-            verifyCertificate();
+            if (type === 'cert') verifyCertificate();
+            if (type === 'partner') verifyPartner();
         }
-    });
+    }
 
+    // دالة التحقق من الشهادات
     function verifyCertificate() {
-        // تحويل القيمة المدخلة من المستخدم إلى أحرف كبيرة مباشرة لتجاهل حالة الأحرف
-        const inputRef = document.getElementById('refInput').value.trim().toUpperCase();
-        const resultDiv = document.getElementById('result');
+        const inputRef = document.getElementById('certInput').value.trim().toUpperCase();
+        const resultBox = document.getElementById('result-box');
         
-        if(!inputRef) {
-            alert('الرجاء إدخال الرقم المرجعي');
-            return;
-        }
+        if(!inputRef) return alert('الرجاء إدخال الرقم المرجعي للشهادة');
 
-        resultDiv.style.display = 'none';
-        resultDiv.innerHTML = 'جاري التحقق...';
-        resultDiv.style.display = 'block';
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = '<div style="text-align:center; padding: 20px;"><i class="fas fa-spinner fa-spin fa-2x" style="color:#1e3a8a;"></i><p style="margin-top:10px;">جاري استخراج البيانات...</p></div>';
+        resultBox.style.background = '#f1f5f9';
+        resultBox.style.borderColor = '#cbd5e1';
 
-        Papa.parse(csvUrl, {
-            download: true,
-            header: true,
+        Papa.parse(certCsvUrl, {
+            download: true, header: true,
             complete: function(results) {
-                const data = results.data;
+                const record = results.data.find(row => row.RefNumber && row.RefNumber.trim().toUpperCase() === inputRef);
                 
-                // البحث في البيانات مع تحويل رقم السجل في القاعدة أيضاً إلى أحرف كبيرة للمطابقة الدقيقة
-                const record = data.find(row => row.RefNumber && row.RefNumber.trim().toUpperCase() === inputRef);
-
                 if(record) {
-                    // بناء النتيجة الأساسية
-                    let resultHTML = `
-                        <span class="success-icon">✓ شهادة موثقة ومعتمدة</span>
-                        <div class="result-item" title="${record.StudentName}"><strong>الاسم الكامل:</strong> <span>${record.StudentName}</span></div>
-                        <div class="result-item" title="${record.Country}"><strong>الدولة:</strong> <span>${record.Country}</span></div>
-                        <div class="result-item" title="${record.CourseName}"><strong>اسم البرنامج التدريبي:</strong> <span>${record.CourseName}</span></div>
-                        <div class="result-item" title="${record.CertificateType}"><strong>مسمى الشهادة:</strong> <span>${record.CertificateType}</span></div>
-                        <div class="result-item" title="${record.Signatory}"><strong>صادرة بتوقيع المدرب:</strong> <span>${record.Signatory}</span></div>
+                    let html = `
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <i class="fas fa-check-circle" style="font-size: 35px; color: #059669;"></i>
+                            <div style="font-weight: bold; color: #059669; margin-top: 8px; font-size: 18px;">وثيقة معتمدة وموثقة</div>
+                        </div>
+                        <div class="result-item"><strong>الاسم الكامل:</strong> <span>${record.StudentName}</span></div>
+                        <div class="result-item"><strong>الدولة:</strong> <span>${record.Country}</span></div>
+                        <div class="result-item"><strong>البرنامج التدريبي:</strong> <span>${record.CourseName}</span></div>
+                        <div class="result-item"><strong>مسمى الشهادة:</strong> <span>${record.CertificateType}</span></div>
+                        <div class="result-item"><strong>صادرة بتوقيع:</strong> <span>${record.Signatory}</span></div>
                     `;
-
-                    // التحقق من وجود رابط الشهادة وإضافة الزر
                     if (record.CertificateLink && record.CertificateLink.trim() !== '') {
-                        resultHTML += `
-                            <div style="margin-top: 15px; border-top: 1px solid #c2e0f4; padding-top: 15px;">
-                                <a href="${record.CertificateLink.trim()}" target="_blank" class="pdf-btn">
-                                    <i class="fas fa-file-pdf"></i> عرض وتحميل الشهادة الأصلية
-                                </a>
-                            </div>
-                        `;
+                        html += `<a href="${record.CertificateLink.trim()}" target="_blank" class="pdf-btn"><i class="fas fa-file-pdf" style="margin-left: 8px;"></i> عرض وتحميل الشهادة الأصلية</a>`;
                     }
-
-                    resultDiv.innerHTML = resultHTML;
-                    resultDiv.style.background = '#e8f4fd';
-                    resultDiv.style.borderColor = '#c2e0f4';
+                    resultBox.innerHTML = html;
+                    resultBox.style.background = '#f0fdf4'; resultBox.style.borderColor = '#bbf7d0';
                 } else {
-                    resultDiv.innerHTML = `<p style="color: #c53030; font-weight: bold; margin: 0; text-align: center;">❌ الرقم المرجعي غير صحيح أو غير مدرج في السجلات.</p>`;
-                    resultDiv.style.background = '#fff5f5';
-                    resultDiv.style.borderColor = '#feb2b2';
+                    resultBox.innerHTML = `<div style="text-align: center; color: #dc2626;"><i class="fas fa-times-circle fa-3x" style="margin-bottom: 10px;"></i><p style="font-weight: bold; font-size: 16px;">الرقم المرجعي غير صحيح أو غير مدرج</p></div>`;
+                    resultBox.style.background = '#fef2f2'; resultBox.style.borderColor = '#fecaca';
                 }
             },
-            error: function(err) {
-                resultDiv.innerHTML = `<p style="color: #c53030; margin: 0; text-align: center;">حدث خطأ في الاتصال بقاعدة البيانات، يرجى المحاولة لاحقاً.</p>`;
-                resultDiv.style.background = '#fff5f5';
-                resultDiv.style.borderColor = '#feb2b2';
-            }
+            error: function() { resultBox.innerHTML = '<p style="color:red; text-align:center;">حدث خطأ في الاتصال، يرجى المحاولة لاحقاً.</p>'; }
+        });
+    }
+
+    // دالة التحقق من الاعتمادات
+    function verifyPartner() {
+        const inputStr = document.getElementById('partnerInput').value.trim().toLowerCase();
+        const resultBox = document.getElementById('result-box');
+        
+        if(!inputStr) return alert('الرجاء إدخال اسم المدرب أو الشريك');
+
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = '<div style="text-align:center; padding: 20px;"><i class="fas fa-spinner fa-spin fa-2x" style="color:#b8860b;"></i><p style="margin-top:10px;">جاري استخراج البيانات...</p></div>';
+        resultBox.style.background = '#f1f5f9';
+        resultBox.style.borderColor = '#cbd5e1';
+
+        Papa.parse(partnerCsvUrl, {
+            download: true, header: true,
+            complete: function(results) {
+                const record = results.data.find(row => 
+                    (row.ArabicName && row.ArabicName.toLowerCase().includes(inputStr)) || 
+                    (row.EnglishName && row.EnglishName.toLowerCase().includes(inputStr))
+                );
+
+                if(record) {
+                    let statusBadge = '';
+                    if(record.ExpiryDate) {
+                        const expiryDate = new Date(record.ExpiryDate);
+                        if (expiryDate >= new Date()) statusBadge = `<span class="status-badge status-active">ساري (حتى ${record.ExpiryDate})</span>`;
+                        else statusBadge = `<span class="status-badge status-expired">منتهي (منذ ${record.ExpiryDate})</span>`;
+                    } else { statusBadge = `<span>غير محدد</span>`; }
+
+                    resultBox.innerHTML = `
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <i class="fas fa-certificate" style="font-size: 35px; color: #b8860b;"></i>
+                            <div style="font-weight: bold; color: #b8860b; margin-top: 8px; font-size: 18px;">تم العثور على سجل معتمد</div>
+                        </div>
+                        <div class="result-item"><strong>الاسم (عربي):</strong> <span>${record.ArabicName || '-'}</span></div>
+                        <div class="result-item"><strong>الاسم (إنجليزي):</strong> <span>${record.EnglishName || '-'}</span></div>
+                        <div class="result-item"><strong>الصفة/الاعتماد:</strong> <span>${record.Capacity || '-'}</span></div>
+                        <div class="result-item"><strong>النطاق الجغرافي:</strong> <span>${record.Location || '-'}</span></div>
+                        <div class="result-item" style="align-items: center;"><strong>حالة الاعتماد:</strong> ${statusBadge}</div>
+                    `;
+                    resultBox.style.background = '#fdfaf0'; resultBox.style.borderColor = '#f6e0b5';
+                } else {
+                    resultBox.innerHTML = `<div style="text-align: center; color: #dc2626;"><i class="fas fa-times-circle fa-3x" style="margin-bottom: 10px;"></i><p style="font-weight: bold; font-size: 16px;">لم يتم العثور على سجل يطابق هذا الاسم</p></div>`;
+                    resultBox.style.background = '#fef2f2'; resultBox.style.borderColor = '#fecaca';
+                }
+            },
+            error: function() { resultBox.innerHTML = '<p style="color:red; text-align:center;">حدث خطأ في الاتصال، يرجى المحاولة لاحقاً.</p>'; }
         });
     }
 </script>
 
 </body>
 </html>
-
-```
