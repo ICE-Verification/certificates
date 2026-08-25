@@ -62,14 +62,34 @@
         .legal-box p { font-size: 14px; margin-bottom: 10px; line-height: 1.6; }
         .legal-box strong { color: #cbd5e1; }
 
-        /* شبكة منظومة العمل (البطاقات) */
+        /* شبكة منظومة العمل (تأثير الأيقونات الطافية) */
         .system-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        .card {
-            background: white; padding: 25px; border-radius: 12px; border-top: 4px solid var(--primary-blue);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s;
+        
+        .icon-3d-wrapper {
+            width: 65px; height: 65px; border-radius: 18px;
+            display: flex; justify-content: center; align-items: center;
+            color: white; margin-bottom: 20px; margin-top: -40px; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            border: 2px solid rgba(255,255,255,0.5);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-        .card i { font-size: 30px; color: var(--primary-gold); margin-bottom: 15px; }
+        .card:hover .icon-3d-wrapper { transform: translateY(-8px) scale(1.05) rotate(5deg); }
+        .icon-3d-wrapper i { font-size: 28px; margin: 0; color: white;}
+
+        .bg-gradient-1 { background: linear-gradient(135deg, #3b82f6, #1e3a8a); }
+        .bg-gradient-2 { background: linear-gradient(135deg, #10b981, #047857); }
+        .bg-gradient-3 { background: linear-gradient(135deg, #f59e0b, #b8860b); }
+        .bg-gradient-4 { background: linear-gradient(135deg, #8b5cf6, #5b21b6); }
+        .bg-gradient-5 { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+        .bg-gradient-6 { background: linear-gradient(135deg, #06b6d4, #0369a1); }
+        
+        .card {
+            background: white; padding: 25px 25px 20px; border-radius: 16px; 
+            margin-top: 20px; border: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06); transition: all 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
+        
         .card h3 { font-size: 18px; color: var(--primary-blue); margin-bottom: 10px; }
         .card p { font-size: 14px; color: var(--text-muted); text-align: justify; }
 
@@ -127,7 +147,7 @@
             <a href="index.html" class="btn-action btn-blue">
                 <i class="fas fa-graduation-cap"></i> بوابة التحقق من الشهادات
             </a>
-            <a href="partners.html" class="btn-action btn-gold">
+            <a href="index.html" class="btn-action btn-gold">
                 <i class="fas fa-id-badge"></i> بوابة التحقق من الاعتمادات
             </a>
         </div>
@@ -156,35 +176,35 @@
         </div>
 
         <!-- منظومة عمل الكلية -->
-        <h2 class="section-title">منظومة عمل الكلية</h2>
+        <h2 class="section-title" style="margin-top: 20px;">منظومة عمل الكلية</h2>
         <div class="system-grid">
             <div class="card">
-                <i class="fas fa-chalkboard-teacher"></i>
+                <div class="icon-3d-wrapper bg-gradient-1"><i class="fas fa-chalkboard-teacher"></i></div>
                 <h3>التعليم والتدريب</h3>
                 <p>تقديم البرامج التعليمية والمهنية لإكساب المهارات. نسعى للجمع بين الأساس العلمي والتطبيق العملي في مجالات الإدارة، القيادة، التسويق، والذكاء الاصطناعي.</p>
             </div>
             <div class="card">
-                <i class="fas fa-comments"></i>
+                <div class="icon-3d-wrapper bg-gradient-2"><i class="fas fa-comments"></i></div>
                 <h3>الاستشارات التعليمية</h3>
                 <p>تقديم خدمات الإرشاد والتوجيه، بما في ذلك الاستشارات المتعلقة بالتعليم الدولي للطلاب، ودعم المستفيدين في تقييم المسارات والفرص التعليمية المتاحة.</p>
             </div>
             <div class="card">
-                <i class="fas fa-handshake"></i>
+                <div class="icon-3d-wrapper bg-gradient-3"><i class="fas fa-handshake"></i></div>
                 <h3>الشراكات والتعاون الدولي</h3>
                 <p>إبرام الاتفاقيات مع المؤسسات التعليمية محلياً ودولياً، وتنظيم برامج التبادل الطلابي، لربط الكفاءات ببيئات وخبرات متعددة عبر الحدود.</p>
             </div>
             <div class="card">
-                <i class="fas fa-chart-line"></i>
+                <div class="icon-3d-wrapper bg-gradient-4"><i class="fas fa-chart-line"></i></div>
                 <h3>ريادة وتطوير الأعمال</h3>
                 <p>منظومة تتجاوز تأسيس المشاريع إلى فهم السوق، بناء نموذج العمل، التوسط في الروابط التجارية، وتحويل المعرفة إلى قيمة اقتصادية مؤسسية.</p>
             </div>
             <div class="card">
-                <i class="fas fa-search"></i>
+                <div class="icon-3d-wrapper bg-gradient-5"><i class="fas fa-search"></i></div>
                 <h3>البحث والاستشارات</h3>
                 <p>أداة لفهم الأسواق وتحليل المشاريع لصناعة القرار. تتكامل الوظيفة التعليمية مع البحثية لتطوير حلول مبنية على التحليل الدقيق.</p>
             </div>
             <div class="card">
-                <i class="fas fa-laptop-code"></i>
+                <div class="icon-3d-wrapper bg-gradient-6"><i class="fas fa-laptop-code"></i></div>
                 <h3>التعليم الرقمي</h3>
                 <p>التعليم الرقمي ليس بديلاً للحضور، بل نموذج تعليمي ومهني قادر على تقديم المعرفة والخدمات الاستشارية للمستفيدين عبر بيئات تتجاوز الحدود الجغرافية.</p>
             </div>
@@ -235,7 +255,7 @@
             <div class="vm-box">
                 <i class="fas fa-bullseye"></i>
                 <h3>رسالتنا</h3>
-                <p>"تمكين الأفراد والمؤسسات من بناء المعرفة والقدرات اللازمة للتميز، من خلال منظومة متكاملة تركز على التطبيق والقيمة والأثر وفق منهجيات علمية ومهنية."</p>
+                <p>"تمكين الأفراد والمؤسسات من بناء المعرفة والقدرات اللازمة للتميز، من خلال منظومة متكامل تركز على التطبيق والقيمة والأثر وفق منهجيات علمية ومهنية."</p>
             </div>
         </div>
     </div>
