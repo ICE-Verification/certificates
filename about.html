@@ -19,7 +19,7 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
-        body { background-color: var(--light-bg); color: var(--text-dark); line-height: 1.8; }
+        body { background-color: var(--light-bg); color: var(--text-dark); line-height: 1.8; overflow-x: hidden; }
 
         /* تنسيق الترويسة (Hero Section) */
         .hero {
@@ -34,16 +34,16 @@
         .hero h2 { color: var(--text-muted); font-size: 18px; font-weight: normal; margin-bottom: 15px; }
         .hero .slogan { font-size: 20px; color: var(--primary-gold); font-weight: bold; max-width: 800px; margin: 0 auto 30px; }
 
-        /* أزرار التحقق الرئيسية (في أعلى الصفحة) */
+        /* أزرار التحقق الرئيسية */
         .main-actions {
             display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; max-width: 900px; margin: 0 auto;
         }
         .btn-action {
-            flex: 1; min-width: 280px; padding: 16px 20px; border-radius: 10px; text-decoration: none;
+            flex: 1; min-width: 280px; padding: 16px 20px; border-radius: 12px; text-decoration: none;
             color: white; font-weight: bold; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 10px;
             transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
+        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.15); }
         .btn-blue { background-color: var(--primary-blue); }
         .btn-gold { background-color: var(--primary-gold); }
 
@@ -55,20 +55,28 @@
         .intro-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-bottom: 40px; }
         .intro-text { font-size: 16px; text-align: justify; }
         .legal-box {
-            background-color: var(--primary-blue); color: white; padding: 25px; border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(30,58,138,0.1);
+            background-color: var(--primary-blue); color: white; padding: 30px; border-radius: 16px;
+            box-shadow: 0 15px 30px rgba(30,58,138,0.15);
         }
-        .legal-box h3 { color: var(--primary-gold); margin-bottom: 15px; font-size: 18px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px;}
-        .legal-box p { font-size: 14px; margin-bottom: 10px; line-height: 1.6; }
+        .legal-box h3 { color: var(--primary-gold); margin-bottom: 20px; font-size: 18px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px;}
+        .legal-box p { font-size: 14px; margin-bottom: 12px; line-height: 1.6; }
         .legal-box strong { color: #cbd5e1; }
 
-        /* شبكة منظومة العمل (تأثير الأيقونات الطافية) */
-        .system-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        /* التدرجات اللونية للأيقونات الطافية */
+        .bg-gradient-1 { background: linear-gradient(135deg, #3b82f6, #1e3a8a); }
+        .bg-gradient-2 { background: linear-gradient(135deg, #10b981, #047857); }
+        .bg-gradient-3 { background: linear-gradient(135deg, #f59e0b, #b8860b); }
+        .bg-gradient-4 { background: linear-gradient(135deg, #8b5cf6, #5b21b6); }
+        .bg-gradient-5 { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+        .bg-gradient-6 { background: linear-gradient(135deg, #06b6d4, #0369a1); }
+
+        /* شبكة منظومة العمل */
+        .system-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 20px;}
         
         .icon-3d-wrapper {
             width: 65px; height: 65px; border-radius: 18px;
             display: flex; justify-content: center; align-items: center;
-            color: white; margin-bottom: 20px; margin-top: -40px; 
+            color: white; margin-bottom: 20px; margin-top: -45px; 
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
             border: 2px solid rgba(255,255,255,0.5);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -76,43 +84,67 @@
         .card:hover .icon-3d-wrapper { transform: translateY(-8px) scale(1.05) rotate(5deg); }
         .icon-3d-wrapper i { font-size: 28px; margin: 0; color: white;}
 
-        .bg-gradient-1 { background: linear-gradient(135deg, #3b82f6, #1e3a8a); }
-        .bg-gradient-2 { background: linear-gradient(135deg, #10b981, #047857); }
-        .bg-gradient-3 { background: linear-gradient(135deg, #f59e0b, #b8860b); }
-        .bg-gradient-4 { background: linear-gradient(135deg, #8b5cf6, #5b21b6); }
-        .bg-gradient-5 { background: linear-gradient(135deg, #ef4444, #b91c1c); }
-        .bg-gradient-6 { background: linear-gradient(135deg, #06b6d4, #0369a1); }
-        
         .card {
             background: white; padding: 25px 25px 20px; border-radius: 16px; 
-            margin-top: 20px; border: none;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.06); transition: all 0.3s;
+            margin-top: 30px; border: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.04); transition: all 0.3s;
         }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
-        
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
         .card h3 { font-size: 18px; color: var(--primary-blue); margin-bottom: 10px; }
         .card p { font-size: 14px; color: var(--text-muted); text-align: justify; }
 
-        /* قوائم البناء والتميز */
-        .lists-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
+        /* قوائم البناء والتميز (تم تحديثها بالكامل) */
+        .lists-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; }
+        
         .check-list { list-style: none; }
-        .check-list li { margin-bottom: 12px; font-size: 15px; display: flex; align-items: flex-start; gap: 10px; }
-        .check-list i { color: var(--primary-gold); margin-top: 6px; }
+        .check-list li { 
+            background: white; margin-bottom: 12px; font-size: 15px; display: flex; align-items: center; gap: 15px;
+            padding: 12px 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .check-list li:hover { transform: translateX(-8px); box-shadow: 0 8px 15px rgba(0,0,0,0.08); }
+        
+        .check-icon-wrapper {
+            background: linear-gradient(135deg, var(--primary-gold), #d4af37);
+            width: 32px; height: 32px; border-radius: 8px;
+            display: flex; justify-content: center; align-items: center; flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(184,134,11,0.3);
+        }
+        .check-icon-wrapper i { color: white; font-size: 14px; margin: 0; }
 
         .tags-container { display: flex; flex-wrap: wrap; gap: 10px; }
-        .tag { background: #e2e8f0; color: var(--primary-blue); padding: 8px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
-
-        /* الرؤية والرسالة */
-        .vision-mission { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
-        .vm-box {
-            background: white; padding: 30px; border-radius: 12px; text-align: center;
-            border: 1px solid #e2e8f0; position: relative;
+        .tag { 
+            background: white; color: var(--primary-blue); padding: 10px 18px; border-radius: 30px; 
+            font-size: 14px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0; transition: all 0.3s; cursor: default;
         }
-        .vm-box i { font-size: 40px; color: var(--primary-gold); margin-bottom: 15px; opacity: 0.8; }
-        .vm-box h3 { font-size: 20px; color: var(--primary-blue); margin-bottom: 15px; }
-        .vm-box p { font-size: 16px; font-style: italic; }
+        .tag:hover { background: var(--primary-blue); color: white; transform: translateY(-3px); box-shadow: 0 8px 15px rgba(30,58,138,0.2); }
 
-        /* الفوتر (التذييل) */
+        /* الرؤية والرسالة (تم التحديث للتصميم ثلاثي الأبعاد) */
+        .vision-mission { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 70px; margin-bottom: 20px;}
+        
+        .vm-box {
+            background: white; padding: 50px 30px 30px; border-radius: 20px; text-align: center;
+            border: none; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+        }
+        .vm-box:hover { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(0,0,0,0.12); }
+        
+        .vm-icon-wrapper {
+            width: 85px; height: 85px; border-radius: 25px;
+            display: flex; justify-content: center; align-items: center;
+            position: absolute; top: -42px; right: 50%; transform: translateX(50%);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+            border: 4px solid white;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .vm-box:hover .vm-icon-wrapper { transform: translateX(50%) translateY(-10px) rotate(-5deg); }
+        .vm-icon-wrapper i { font-size: 38px; color: white; }
+        
+        .vm-box h3 { font-size: 22px; color: var(--primary-blue); margin-bottom: 15px; }
+        .vm-box p { font-size: 16px; font-style: italic; color: var(--text-muted); line-height: 1.8;}
+
+        /* الفوتر */
         footer {
             background-color: var(--primary-blue); color: white; text-align: center; padding: 40px 20px;
             margin-top: 50px; border-top: 5px solid var(--primary-gold);
@@ -130,6 +162,7 @@
             .hero h1 { font-size: 24px; }
             .hero .slogan { font-size: 16px; }
             .btn-action { min-width: 100%; }
+            .vision-mission { margin-top: 50px; gap: 60px;}
         }
     </style>
 </head>
@@ -215,14 +248,14 @@
             <div>
                 <h2 class="section-title">ماذا نبني؟</h2>
                 <ul class="check-list">
-                    <li><i class="fas fa-check-circle"></i> تطوير القيادات والكفاءات التنفيذية.</li>
-                    <li><i class="fas fa-check-circle"></i> صناعة رواد الأعمال وتطوير قدراتهم.</li>
-                    <li><i class="fas fa-check-circle"></i> رفع الكفاءة المهنية والمؤسسية.</li>
-                    <li><i class="fas fa-check-circle"></i> تطوير المؤسسات والأنظمة الإدارية.</li>
-                    <li><i class="fas fa-check-circle"></i> بناء القدرات التنظيمية والتشغيلية.</li>
-                    <li><i class="fas fa-check-circle"></i> تصميم الحلول الاستراتيجية والتطويرية.</li>
-                    <li><i class="fas fa-check-circle"></i> تحويل المعرفة إلى ممارسات قابلة للتطبيق.</li>
-                    <li><i class="fas fa-check-circle"></i> ربط التعليم باحتياجات سوق العمل.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> تطوير القيادات والكفاءات التنفيذية.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> صناعة رواد الأعمال وتطوير قدراتهم.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> رفع الكفاءة المهنية والمؤسسية.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> تطوير المؤسسات والأنظمة الإدارية.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> بناء القدرات التنظيمية والتشغيلية.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> تصميم الحلول الاستراتيجية والتطويرية.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> تحويل المعرفة إلى ممارسات قابلة للتطبيق.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> ربط التعليم باحتياجات سوق العمل.</li>
                 </ul>
             </div>
             <div>
@@ -240,22 +273,24 @@
                     <span class="tag">التعليم الرقمي</span>
                 </div>
                 
-                <h2 class="section-title" style="margin-top: 30px;">البعد الدولي</h2>
+                <h2 class="section-title" style="margin-top: 35px;">البعد الدولي</h2>
                 <p style="font-size: 15px; text-align: justify; color: var(--text-muted);">كلمة «الدولية» ليست مجرد عنصر تسويقي، بل تعكس انفتاحاً مؤسسياً، تبادلاً للمعرفة، وتعاوناً تعليمياً يربط الأفراد والمؤسسات بالفرص العابرة للحدود. من إسطنبول تنطلق شبكتنا المهنية لتتجاوز الحدود الجغرافية.</p>
             </div>
         </div>
 
-        <!-- الرؤية والرسالة -->
+        <!-- الرؤية والرسالة (بتصميم ثلاثي الأبعاد) -->
         <div class="vision-mission">
             <div class="vm-box">
-                <i class="fas fa-eye"></i>
+                <!-- أيقونة التلسكوب للرؤية -->
+                <div class="vm-icon-wrapper bg-gradient-3"><i class="fas fa-telescope"></i></div>
                 <h3>رؤيتنا</h3>
                 <p>"أن تكون كلية ريادة الأعمال الدولية مؤسسة مرجعية في التعليم والتدريب والاستشارات وتطوير ريادة الأعمال، وشريكاً معرفياً للمؤسسات والأفراد لتحقيق النمو والابتكار والاستدامة."</p>
             </div>
             <div class="vm-box">
-                <i class="fas fa-bullseye"></i>
+                <!-- أيقونة الصاروخ للرسالة -->
+                <div class="vm-icon-wrapper bg-gradient-1"><i class="fas fa-rocket"></i></div>
                 <h3>رسالتنا</h3>
-                <p>"تمكين الأفراد والمؤسسات من بناء المعرفة والقدرات اللازمة للتميز، من خلال منظومة متكامل تركز على التطبيق والقيمة والأثر وفق منهجيات علمية ومهنية."</p>
+                <p>"تمكين الأفراد والمؤسسات من بناء المعرفة والقدرات اللازمة للتميز، من خلال منظومة متكاملة تركز على التطبيق والقيمة والأثر وفق منهجيات علمية ومهنية."</p>
             </div>
         </div>
     </div>
