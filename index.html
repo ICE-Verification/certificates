@@ -1085,6 +1085,239 @@ button {
         animation-duration: .01ms !important;
     }
 }
+
+/* UNIFIED INSTITUTIONAL IDENTITY */
+.institution-name {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    min-width: 0;
+    line-height: 1.45;
+    white-space: nowrap;
+    color: #ffffff;
+}
+
+.institution-name > span {
+    display: block;
+    white-space: nowrap;
+    color: inherit;
+    font-weight: 700;
+}
+
+.institution-ar {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0;
+}
+
+.institution-en {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(8px, 1.05vw, 12px);
+    letter-spacing: .1px;
+}
+
+.institution-acronym {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    font-weight: 800 !important;
+    letter-spacing: 1.5px;
+}
+
+.institution-name-header {
+    color: #ffffff;
+}
+
+.institution-name-hero {
+    color: #ffffff;
+    margin-bottom: 24px;
+}
+
+.institution-name-hero .institution-ar {
+    font-size: clamp(23px, 3.2vw, 37px);
+    font-weight: 800;
+}
+
+.institution-name-hero .institution-en {
+    font-size: clamp(11px, 1.55vw, 17px);
+    font-weight: 700;
+}
+
+.institution-name-hero .institution-acronym {
+    font-size: 15px;
+    margin-top: 2px;
+}
+
+.hero-headline {
+    font-size: clamp(27px, 4vw, 43px);
+    font-weight: 800;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.hero-headline span {
+    color: #ffffff;
+}
+
+.institution-name-visual {
+    align-items: center;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.institution-name-visual .institution-ar {
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.institution-name-visual .institution-en {
+    font-size: clamp(9px, 1.1vw, 12px);
+}
+
+.institution-name-visual .institution-acronym {
+    font-size: 16px;
+    margin-top: 3px;
+}
+
+.contact-motto {
+    color: #d8e0eb !important;
+    font-size: 13px !important;
+    font-weight: 600;
+}
+
+.institution-name-footer {
+    color: #ffffff;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.institution-name-footer .institution-ar {
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.institution-name-footer .institution-en {
+    font-size: clamp(9px, 1vw, 11px);
+}
+
+.institution-name-footer .institution-acronym {
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+/* STRONGER, MORE LEGIBLE BODY TYPOGRAPHY */
+:root {
+    --muted: #586679;
+}
+
+body {
+    font-weight: 500;
+}
+
+.section-heading p,
+.about-text p,
+.service-card p,
+.international-box p,
+.verification-panel p,
+.contact-info p {
+    color: #536176;
+    font-weight: 500;
+}
+
+.trust-item span {
+    color: #4f5d70;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.legal-row span {
+    color: #d0d9e5;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.legal-row strong {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.8;
+}
+
+.service-card p,
+.capabilities-grid .build-list li,
+.international-box p {
+    color: #4e5c70;
+    font-weight: 500;
+}
+
+.section-heading p {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.hero-description,
+.hero-slogan {
+    font-weight: 600;
+}
+
+.footer-brand p,
+.footer-column a {
+    color: #c3ccda;
+    font-weight: 500;
+}
+
+.contact-detail span {
+    color: #59677a;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+@media (max-width: 700px) {
+    .brand {
+        gap: 8px;
+    }
+
+    .institution-name-header .institution-ar {
+        font-size: 11px;
+    }
+
+    .institution-name-header .institution-en {
+        font-size: 8px;
+        letter-spacing: 0;
+    }
+
+    .institution-name-header .institution-acronym {
+        font-size: 9px;
+    }
+
+    .institution-name-hero .institution-ar {
+        font-size: 23px;
+    }
+
+    .institution-name-hero .institution-en {
+        font-size: 10px;
+    }
+
+    .institution-name-visual .institution-en,
+    .institution-name-footer .institution-en {
+        font-size: 8px;
+    }
+
+    .institution-name-footer .institution-ar {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 360px) {
+    .institution-name-header .institution-ar {
+        font-size: 10px;
+    }
+
+    .institution-name-header .institution-en {
+        font-size: 7px;
+    }
+}
+
 </style>
 </head>
 
@@ -1097,9 +1330,10 @@ button {
 
         <a href="#home" class="brand">
             <img src="logo.png" alt="I.C.E. Logo">
-            <div class="brand-text">
-                <strong>I.C.E.</strong>
-                <span>INTERNATIONAL COLLEGE</span>
+            <div class="institution-name institution-name-header" aria-label="كلية ريادة الأعمال الدولية، International College of Entrepreneurship، I.C.E">
+                <span class="institution-ar">كلية ريادة الأعمال الدولية</span>
+                <span class="institution-en" dir="ltr">International College of Entrepreneurship</span>
+                <span class="institution-acronym" dir="ltr">I.C.E</span>
             </div>
         </a>
 
@@ -1133,15 +1367,15 @@ button {
                 مؤسسة تعليمية واستشارية في إسطنبول
             </div>
 
-            <h1>
-                كلية ريادة الأعمال الدولية
-                <br>
+            <div class="institution-name institution-name-hero" aria-label="كلية ريادة الأعمال الدولية، International College of Entrepreneurship، I.C.E">
+                <span class="institution-ar">كلية ريادة الأعمال الدولية</span>
+                <span class="institution-en" dir="ltr">International College of Entrepreneurship</span>
+                <span class="institution-acronym" dir="ltr">I.C.E</span>
+            </div>
+
+            <h1 class="hero-headline">
                 <span>نحو مستقبل تصنعه المعرفة</span>
             </h1>
-
-            <div class="hero-english">
-                International College of Entrepreneurship
-            </div>
 
             <p class="hero-description">
                 منظومة متكاملة في التعليم والتدريب والاستشارات وتطوير الأعمال،
@@ -1264,18 +1498,13 @@ button {
             </div>
 
             <div class="legal-row">
-                <span>رقم MERSİS</span>
-                <strong dir="ltr">0336-1189-1980-0001</strong>
-            </div>
-
-            <div class="legal-row">
                 <span>تاريخ بدء النشاط</span>
                 <strong dir="ltr">17/03/2022</strong>
             </div>
 
             <div class="legal-row">
-                <span>المجموعة المهنية</span>
-                <strong>15 – التعليم</strong>
+                <span>Meslek Grubu</span>
+                <strong dir="ltr">15 – Eğitim</strong>
             </div>
 
             <div class="legal-row">
@@ -1576,11 +1805,12 @@ button {
         </div>
 
         <div class="contact-visual reveal">
-            <div class="ice">I.C.E.</div>
-            <h3>International College of Entrepreneurship</h3>
-            <p>
-                Knowledge. Capability. Impact.
-            </p>
+            <div class="institution-name institution-name-visual" aria-label="كلية ريادة الأعمال الدولية، International College of Entrepreneurship، I.C.E">
+                <span class="institution-ar">كلية ريادة الأعمال الدولية</span>
+                <span class="institution-en" dir="ltr">International College of Entrepreneurship</span>
+                <span class="institution-acronym" dir="ltr">I.C.E</span>
+            </div>
+            <p class="contact-motto">Knowledge. Capability. Impact.</p>
         </div>
 
     </div>
@@ -1594,9 +1824,12 @@ button {
         <div class="footer-top">
 
             <div class="footer-brand">
-                <h3>I.C.E.</h3>
+                <div class="institution-name institution-name-footer" aria-label="كلية ريادة الأعمال الدولية، International College of Entrepreneurship، I.C.E">
+                    <span class="institution-ar">كلية ريادة الأعمال الدولية</span>
+                    <span class="institution-en" dir="ltr">International College of Entrepreneurship</span>
+                    <span class="institution-acronym" dir="ltr">I.C.E</span>
+                </div>
                 <p>
-                    كلية ريادة الأعمال الدولية في إسطنبول.
                     منظومة تعليم وتدريب واستشارات وتطوير أعمال،
                     تربط المعرفة بالتطبيق والطموح ببناء مؤسسات
                     أكثر قدرة على النمو.
