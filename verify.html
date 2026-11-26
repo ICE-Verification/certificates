@@ -1,309 +1,1043 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة التحقق الإلكتروني | International College of Entrepreneurship</title>
-    
-    <!-- استدعاء المكتبات -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary-blue: #1e3a8a;
-            --primary-gold: #b8860b;
-            --bg-gradient-1: #f8fafc;
-            --bg-gradient-2: #e2e8f0;
-            --text-dark: #1e293b;
-            --text-gray: #64748b;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101d35">
+  <meta name="description" content="بوابة التحقق الرسمية من الشهادات والاعتمادات الصادرة عن كلية ريادة الأعمال الدولية I.C.E.">
+  <title>بوابة التحقق | كلية ريادة الأعمال الدولية</title>
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
-        body { 
-            background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%); 
-            display: flex; flex-direction: column; align-items: center; 
-            min-height: 100vh; padding: 30px 15px;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-        .main-container { 
-            background: white; padding: 40px 30px; border-radius: 20px; 
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
-            width: 100%; max-width: 650px; 
-            border-top: 6px solid var(--primary-blue);
-            animation: fadeIn 0.6s ease-out forwards;
-        }
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .header-section { text-align: center; margin-bottom: 30px; }
-        .logo { width: 130px; margin-bottom: 15px; }
-        .college-title { font-size: 22px; color: var(--primary-blue); font-weight: bold; margin-bottom: 5px; }
-        .portal-subtitle { font-size: 15px; color: var(--text-gray); margin-bottom: 15px; }
+  <style>
+    :root {
+      --navy: #101d35;
+      --navy-light: #1a2c4b;
+      --navy-soft: #263b5e;
+      --gold: #c6a45c;
+      --gold-light: #e0c783;
+      --white: #ffffff;
+      --surface: #f5f6f8;
+      --text: #202b3b;
+      --muted: #697586;
+      --border: #dce1e8;
+      --success: #16794b;
+      --success-bg: #e9f6ef;
+      --danger: #b42318;
+      --danger-bg: #fff0ee;
+      --warning: #986c16;
+      --warning-bg: #fff7e5;
+      --shadow: 0 16px 45px rgba(10, 25, 48, .12);
+    }
 
-        .back-home-btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            background: #f1f5f9; color: var(--primary-blue); padding: 8px 18px; border-radius: 20px;
-            text-decoration: none; font-weight: bold; font-size: 13px; border: 1px solid #cbd5e1;
-            transition: all 0.2s ease;
-        }
-        .back-home-btn:hover { background: var(--primary-blue); color: white; border-color: var(--primary-blue); }
+    * {
+      box-sizing: border-box;
+    }
 
-        .tabs-container {
-            display: flex; background: #f1f5f9; border-radius: 12px; padding: 5px; margin-bottom: 30px;
-        }
-        .tab-btn {
-            flex: 1; padding: 14px 10px; border: none; background: transparent; 
-            border-radius: 8px; font-size: 15px; font-weight: bold; color: var(--text-gray);
-            cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px;
-        }
-        .tab-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
-        .tab-btn:not(.active):hover { color: var(--text-dark); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Cairo", sans-serif;
+      background: var(--surface);
+      color: var(--text);
+    }
 
-        .search-section { display: none; animation: slideDown 0.4s ease-out forwards; }
-        .search-section.active { display: block; }
-        
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    button, input {
+      font-family: inherit;
+    }
 
-        .input-group { margin-bottom: 20px; }
-        .input-label { display: block; margin-bottom: 10px; font-size: 14px; color: var(--text-dark); font-weight: bold; text-align: right;}
-        
-        input { 
-            width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 10px; 
-            font-size: 16px; text-align: center; transition: all 0.3s; background: #f8fafc;
-        }
-        input:focus { border-color: var(--primary-blue); outline: none; background: white; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); }
-        
-        button.verify-submit-btn { 
-            background-color: var(--primary-blue); color: white; border: none; padding: 15px; 
-            border-radius: 10px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; 
-            transition: all 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px;
-        }
-        button.verify-submit-btn:hover { background-color: #152b69; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(30,58,138,0.2); }
-        button.verify-submit-btn.gold { background-color: var(--primary-gold); }
-        button.verify-submit-btn.gold:hover { background-color: #996515; box-shadow: 0 5px 15px rgba(184,134,11,0.2); }
+    a {
+      color: inherit;
+    }
 
-        #result-box { margin-top: 30px; display: none; padding: 25px; border-radius: 12px; border: 1px solid transparent; width: 100%; }
-        
-        .result-item { margin-bottom: 12px; font-size: 15px; display: flex; align-items: flex-start; }
-        .result-item strong { margin-left: 10px; flex-shrink: 0; min-width: 120px; color: #1e293b;}
-        .result-item span { color: #475569; }
+    .topbar {
+      background: var(--navy);
+      border-bottom: 3px solid var(--gold);
+      padding: 14px 20px;
+    }
 
-        .status-badge { padding: 5px 12px; border-radius: 6px; font-weight: bold; font-size: 14px; display: inline-block; }
-        .status-active { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-        .status-expired { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+    .topbar-inner {
+      max-width: 1120px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
 
-        .pdf-btn {
-            display: inline-flex; align-items: center; justify-content: center; background-color: #059669; color: white;
-            padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 20px;
-            transition: all 0.3s; font-size: 15px; width: 100%;
-        }
-        .pdf-btn:hover { background-color: #047857; }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-width: 0;
+    }
 
-        .footer-section { margin-top: 30px; text-align: center; }
-        .social-icons { display: flex; justify-content: center; gap: 15px; }
-        .social-icon { 
-            display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; 
-            border-radius: 50%; color: white; text-decoration: none; font-size: 18px; transition: transform 0.3s; 
-        }
-        .social-icon:hover { transform: translateY(-3px); }
-        .facebook-btn { background-color: #1877F2; }
-        .whatsapp-btn { background-color: #25D366; }
-        .email-btn { background-color: var(--primary-gold); }
-        
-        @media (max-width: 480px) {
-            .main-container { padding: 30px 20px; }
-            .college-title { font-size: 19px; }
-            .tab-btn { font-size: 13px; padding: 12px 5px; }
-            .result-item { flex-direction: column; }
-            .result-item strong { margin-bottom: 4px; }
-        }
-    </style>
+    .brand img {
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 10px;
+      padding: 5px;
+    }
+
+    .brand-name {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.6;
+    }
+
+    .brand-en {
+      display: block;
+      color: var(--gold-light);
+      direction: ltr;
+      text-align: right;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: .5px;
+      font-weight: 600;
+    }
+
+    .home-link {
+      text-decoration: none;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 8px;
+      padding: 8px 15px;
+      font-size: 13px;
+      white-space: nowrap;
+      transition: .2s;
+    }
+
+    .home-link:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--navy);
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--navy), var(--navy-light));
+      color: #fff;
+      padding: 48px 20px 76px;
+      text-align: center;
+    }
+
+    .hero-label {
+      display: inline-block;
+      color: var(--gold-light);
+      border: 1px solid rgba(224,199,131,.45);
+      border-radius: 30px;
+      padding: 5px 17px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(25px, 4vw, 36px);
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    .hero p {
+      color: #d5dce8;
+      margin: 0 auto;
+      max-width: 650px;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .main-container {
+      width: min(92%, 850px);
+      margin: -42px auto 55px;
+      position: relative;
+    }
+
+    .verification-panel {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid #e6e9ee;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #edf0f4;
+      padding: 7px;
+      gap: 7px;
+    }
+
+    .tab {
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: #526071;
+      padding: 13px 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .tab.active {
+      background: var(--navy);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(16,29,53,.18);
+    }
+
+    .panel-content {
+      padding: 30px;
+    }
+
+    .section-title {
+      margin: 0 0 7px;
+      color: var(--navy);
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .section-description {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .search-label {
+      display: block;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-input {
+      flex: 1;
+      width: 100%;
+      min-width: 0;
+      height: 52px;
+      border: 1px solid #cbd3de;
+      background: #fff;
+      color: #17243a;
+      border-radius: 9px;
+      padding: 0 15px;
+      font-size: 14px;
+      outline: none;
+      transition: .2s;
+    }
+
+    .search-input::placeholder {
+      color: #929cab;
+    }
+
+    .search-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(198,164,92,.16);
+    }
+
+    .search-button {
+      min-width: 125px;
+      height: 52px;
+      border: 0;
+      border-radius: 9px;
+      padding: 0 20px;
+      background: var(--gold);
+      color: #17243a;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .search-button:hover {
+      background: var(--gold-light);
+    }
+
+    .search-button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    .hint {
+      margin-top: 10px;
+      color: #778292;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .result-area {
+      margin-top: 25px;
+    }
+
+    .message {
+      display: none;
+      padding: 14px 16px;
+      border-radius: 9px;
+      font-size: 13px;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.info {
+      color: #29466c;
+      background: #edf4fc;
+      border: 1px solid #d6e5f5;
+    }
+
+    .message.error {
+      color: var(--danger);
+      background: var(--danger-bg);
+      border: 1px solid #f5d2ce;
+    }
+
+    .message.warning {
+      color: var(--warning);
+      background: var(--warning-bg);
+      border: 1px solid #f0dfb4;
+    }
+
+    .result-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 15px;
+      box-shadow: 0 5px 18px rgba(16,29,53,.05);
+    }
+
+    .result-header {
+      background: var(--navy);
+      color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .result-header strong {
+      font-size: 14px;
+    }
+
+    .result-header span {
+      color: var(--gold-light);
+      font-size: 11px;
+    }
+
+    .result-body {
+      padding: 20px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .result-field {
+      padding: 13px 10px;
+      border-bottom: 1px solid #edf0f3;
+      min-width: 0;
+    }
+
+    .result-field:nth-child(odd) {
+      padding-right: 0;
+    }
+
+    .result-field:nth-child(even) {
+      padding-left: 0;
+    }
+
+    .field-label {
+      display: block;
+      color: #7a8594;
+      font-size: 11px;
+      margin-bottom: 5px;
+    }
+
+    .field-value {
+      display: block;
+      color: #1d2b40;
+      font-size: 14px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+      line-height: 1.8;
+    }
+
+    .status {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .status.valid {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .status.expired {
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+
+    .status.unknown {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+
+    .certificate-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 18px;
+      padding: 11px 19px;
+      border-radius: 8px;
+      background: var(--gold);
+      color: var(--navy);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
+      transition: .2s;
+    }
+
+    .certificate-link:hover {
+      background: var(--gold-light);
+    }
+
+    .footer {
+      background: var(--navy);
+      color: #cbd3df;
+      text-align: center;
+      padding: 25px 15px;
+      font-size: 11px;
+      line-height: 2;
+    }
+
+    .footer strong {
+      color: var(--gold-light);
+    }
+
+    .footer .footer-en {
+      display: block;
+      direction: ltr;
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      color: #9daabd;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 600px) {
+      .topbar {
+        padding: 11px 13px;
+      }
+
+      .brand img {
+        width: 49px;
+        height: 49px;
+      }
+
+      .brand-name {
+        font-size: 12px;
+      }
+
+      .brand-en {
+        font-size: 9px;
+      }
+
+      .home-link {
+        padding: 7px 10px;
+        font-size: 11px;
+      }
+
+      .hero {
+        padding: 37px 16px 68px;
+      }
+
+      .hero p {
+        font-size: 12px;
+      }
+
+      .main-container {
+        width: 94%;
+      }
+
+      .panel-content {
+        padding: 21px 16px;
+      }
+
+      .section-title {
+        font-size: 18px;
+      }
+
+      .search-row {
+        flex-direction: column;
+      }
+
+      .search-button {
+        width: 100%;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-field,
+      .result-field:nth-child(odd),
+      .result-field:nth-child(even) {
+        padding: 11px 0;
+      }
+
+      .result-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="main-container">
-    
-    <!-- الترويسة -->
-    <div class="header-section">
-        <img src="logo.png" alt="شعار الكلية" class="logo">
-        <h1 class="college-title">كلية ريادة الأعمال الدولية</h1>
-        <p class="portal-subtitle">البوابة الإلكترونية الموحدة للتحقق من الوثائق</p>
-        <a href="index.html" class="back-home-btn">
-            <i class="fas fa-home"></i> العودة للرئيسية (عن الكلية)
-        </a>
-    </div>
-
-    <!-- التبويبات لاختيار نوع التحقق -->
-    <div class="tabs-container">
-        <button id="btn-cert-tab" class="tab-btn active" onclick="switchTab('cert-tab', this)">
-            <i class="fas fa-graduation-cap"></i> الشهادات التدريبية
-        </button>
-        <button id="btn-partner-tab" class="tab-btn" onclick="switchTab('partner-tab', this)">
-            <i class="fas fa-id-badge"></i> الاعتمادات والشراكات
-        </button>
-    </div>
-
-    <!-- قسم التحقق من الشهادات -->
-    <div id="cert-tab" class="search-section active">
-        <div class="input-group">
-            <label class="input-label">الرقم المرجعي للشهادة:</label>
-            <input type="text" id="certInput" placeholder="مثال: ICE-PTAD-26-042" onkeypress="handleEnter(event, 'cert')">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <img src="logo.png" alt="شعار كلية ريادة الأعمال الدولية"
+             onerror="this.style.display='none'">
+        <div>
+          <div class="brand-name">كلية ريادة الأعمال الدولية</div>
+          <span class="brand-en">INTERNATIONAL COLLEGE OF ENTREPRENEURSHIP</span>
         </div>
-        <button class="verify-submit-btn" onclick="verifyCertificate()">
-            <i class="fas fa-search"></i> تحقق من الشهادة الآن
-        </button>
-    </div>
+      </div>
 
-    <!-- قسم التحقق من الاعتمادات -->
-    <div id="partner-tab" class="search-section">
-        <div class="input-group">
-            <label class="input-label">اسم المدرب أو الشريك:</label>
-            <input type="text" id="partnerInput" placeholder="أدخل الاسم بالعربية أو الإنجليزية" onkeypress="handleEnter(event, 'partner')">
+      <a class="home-link" href="index.html">الصفحة الرئيسية</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <span class="hero-label">البوابة الرسمية</span>
+    <h1>بوابة التحقق الإلكتروني</h1>
+    <p>
+      منصة التحقق من صحة الشهادات التدريبية والاعتمادات الصادرة
+      عن كلية ريادة الأعمال الدولية.
+    </p>
+  </section>
+
+  <main class="main-container">
+    <section class="verification-panel">
+
+      <div class="tabs">
+        <button class="tab active" id="certTab" type="button">
+          التحقق من الشهادات
+        </button>
+        <button class="tab" id="partnerTab" type="button">
+          التحقق من الاعتمادات
+        </button>
+      </div>
+
+      <div class="panel-content">
+
+        <h2 class="section-title" id="sectionTitle">
+          التحقق من الشهادات
+        </h2>
+
+        <p class="section-description" id="sectionDescription">
+          أدخل الرقم المرجعي للشهادة للتحقق من بياناتها المسجلة في قاعدة بيانات الكلية.
+        </p>
+
+        <label class="search-label" id="searchLabel" for="searchInput">
+          الرقم المرجعي للشهادة
+        </label>
+
+        <div class="search-row">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="أدخل الرقم المرجعي للشهادة"
+            autocomplete="off"
+          >
+          <button class="search-button" id="searchButton" type="button">
+            تحقق الآن
+          </button>
         </div>
-        <button class="verify-submit-btn gold" onclick="verifyPartner()">
-            <i class="fas fa-search"></i> تحقق من الاعتماد الآن
-        </button>
-    </div>
 
-    <!-- صندوق عرض النتائج المشترك -->
-    <div id="result-box"></div>
+        <div class="hint" id="searchHint">
+          يرجى إدخال الرقم المرجعي كما هو موضح في الشهادة.
+        </div>
 
-</div>
+        <div class="result-area">
+          <div id="messageBox" class="message"></div>
+          <div id="results"></div>
+        </div>
 
-<!-- الفوتر -->
-<div class="footer-section">
-    <div class="social-icons">
-        <a href="https://www.facebook.com/ICE.ShujaaAlFahd/" target="_blank" class="social-icon facebook-btn" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://wa.me/908502425710" target="_blank" class="social-icon whatsapp-btn" title="واتساب"><i class="fab fa-whatsapp"></i></a>
-        <a href="mailto:info@i-college-e.tr" class="social-icon email-btn" title="البريد الإلكتروني"><i class="fas fa-envelope"></i></a>
-    </div>
-</div>
+      </div>
+    </section>
+  </main>
 
-<script>
-    const certCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=196238973&single=true&output=csv';
-    const partnerCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=522399146&single=true&output=csv';
+  <footer class="footer">
+    <strong>كلية ريادة الأعمال الدولية</strong>
+    <div>بوابة التحقق الرسمية من الشهادات والاعتمادات</div>
+    <span class="footer-en">INTERNATIONAL COLLEGE OF ENTREPRENEURSHIP — I.C.E.</span>
+  </footer>
 
-    function switchTab(tabId, btnElement) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        document.querySelectorAll('.search-section').forEach(sec => sec.classList.remove('active'));
-        
-        document.getElementById('result-box').style.display = 'none';
-        document.getElementById('certInput').value = '';
-        document.getElementById('partnerInput').value = '';
+  <script>
+    /* مصادر البيانات الأصلية - لا تغيّرها إلا عند تغيير جداول Google Sheets */
 
-        btnElement.classList.add('active');
-        document.getElementById(tabId).classList.add('active');
+    const certCsvUrl =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=196238973&single=true&output=csv";
+
+    const partnerCsvUrl =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=522399146&single=true&output=csv";
+
+    const certTab = document.getElementById("certTab");
+    const partnerTab = document.getElementById("partnerTab");
+    const searchInput = document.getElementById("searchInput");
+    const searchButton = document.getElementById("searchButton");
+    const messageBox = document.getElementById("messageBox");
+    const results = document.getElementById("results");
+    const sectionTitle = document.getElementById("sectionTitle");
+    const sectionDescription = document.getElementById("sectionDescription");
+    const searchLabel = document.getElementById("searchLabel");
+    const searchHint = document.getElementById("searchHint");
+
+    let currentTab = "cert";
+    let certDataPromise = null;
+    let partnerDataPromise = null;
+
+    function normalize(value) {
+      return String(value ?? "")
+        .trim()
+        .toLocaleLowerCase("ar")
+        .replace(/\s+/g, " ");
     }
 
-    // فتح التبويب المناسب تلقائياً عند القدوم من الصفحة الرئيسية
-    window.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const tabParam = urlParams.get('tab');
-        if (tabParam === 'partner') {
-            switchTab('partner-tab', document.getElementById('btn-partner-tab'));
+    function showMessage(text, type = "info") {
+      messageBox.textContent = text;
+      messageBox.className = "message show " + type;
+    }
+
+    function clearMessage() {
+      messageBox.textContent = "";
+      messageBox.className = "message";
+    }
+
+    function clearResults() {
+      results.replaceChildren();
+      clearMessage();
+    }
+
+    function setLoading(isLoading) {
+      searchButton.disabled = isLoading;
+      searchButton.textContent = isLoading ? "جارٍ التحقق..." : "تحقق الآن";
+    }
+
+    function loadCsv(url, type) {
+      return new Promise((resolve, reject) => {
+        if (typeof Papa === "undefined") {
+          reject(new Error("تعذر تحميل مكتبة قراءة البيانات."));
+          return;
         }
+
+        Papa.parse(url, {
+          download: true,
+          header: true,
+          skipEmptyLines: true,
+          transformHeader: header => String(header).trim(),
+
+          complete: function (response) {
+            if (response.errors && response.errors.length) {
+              console.warn("CSV parsing warnings:", response.errors);
+            }
+
+            const rows = response.data || [];
+
+            if (!rows.length) {
+              reject(new Error("لم يتم العثور على بيانات في مصدر السجلات."));
+              return;
+            }
+
+            resolve(rows);
+          },
+
+          error: function (error) {
+            reject(error || new Error("فشل الاتصال بمصدر البيانات."));
+          }
+        });
+      });
+    }
+
+    function getCertData() {
+      if (!certDataPromise) {
+        certDataPromise = loadCsv(certCsvUrl, "cert")
+          .catch(error => {
+            certDataPromise = null;
+            throw error;
+          });
+      }
+      return certDataPromise;
+    }
+
+    function getPartnerData() {
+      if (!partnerDataPromise) {
+        partnerDataPromise = loadCsv(partnerCsvUrl, "partner")
+          .catch(error => {
+            partnerDataPromise = null;
+            throw error;
+          });
+      }
+      return partnerDataPromise;
+    }
+
+    function createElement(tag, className, text) {
+      const element = document.createElement(tag);
+
+      if (className) {
+        element.className = className;
+      }
+
+      if (text !== undefined && text !== null) {
+        element.textContent = String(text);
+      }
+
+      return element;
+    }
+
+    function addField(container, label, value) {
+      const field = createElement("div", "result-field");
+      field.appendChild(createElement("span", "field-label", label));
+      field.appendChild(createElement("span", "field-value", value || "غير متوفر"));
+      container.appendChild(field);
+    }
+
+    function createResultCard(title, subtitle) {
+      const card = createElement("article", "result-card");
+      const header = createElement("div", "result-header");
+      header.appendChild(createElement("strong", "", title));
+      header.appendChild(createElement("span", "", subtitle));
+
+      const body = createElement("div", "result-body");
+      const grid = createElement("div", "result-grid");
+
+      body.appendChild(grid);
+      card.appendChild(header);
+      card.appendChild(body);
+
+      results.appendChild(card);
+
+      return { card, body, grid };
+    }
+
+    function safeCertificateUrl(value) {
+      if (!value) return null;
+
+      try {
+        const url = new URL(String(value).trim());
+
+        if (url.protocol !== "https:" && url.protocol !== "http:") {
+          return null;
+        }
+
+        return url.href;
+      } catch {
+        return null;
+      }
+    }
+
+    function showCertificate(record) {
+      const { body, grid } = createResultCard(
+        "بيانات الشهادة",
+        "سجل الشهادة في قاعدة بيانات الكلية"
+      );
+
+      addField(grid, "الرقم المرجعي", record.RefNumber);
+      addField(grid, "اسم المتدرب", record.StudentName);
+      addField(grid, "الدولة", record.Country);
+      addField(grid, "اسم البرنامج التدريبي", record.CourseName);
+      addField(grid, "نوع الشهادة", record.CertificateType);
+      addField(grid, "الموقّع / المعتمد", record.Signatory);
+
+      const certificateUrl = safeCertificateUrl(record.CertificateLink);
+
+      if (certificateUrl) {
+        const link = createElement("a", "certificate-link", "عرض الشهادة");
+        link.href = certificateUrl;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.setAttribute("aria-label", "فتح ملف الشهادة في نافذة جديدة");
+        body.appendChild(link);
+      } else if (record.CertificateLink) {
+        const warning = createElement(
+          "p",
+          "hint",
+          "رابط الشهادة المسجل غير صالح للفتح."
+        );
+        body.appendChild(warning);
+      }
+    }
+
+    /*
+      قراءة التاريخ:
+      يدعم YYYY-MM-DD و DD/MM/YYYY و DD-MM-YYYY.
+      لا يعتبر التاريخ غير المفهوم تاريخاً منتهياً.
+    */
+
+    function parseExpiryDate(value) {
+      if (!value) return null;
+
+      const raw = String(value).trim();
+      let year, month, day;
+      let match;
+
+      match = raw.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/);
+
+      if (match) {
+        year = Number(match[1]);
+        month = Number(match[2]);
+        day = Number(match[3]);
+      } else {
+        match = raw.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})$/);
+
+        if (match) {
+          day = Number(match[1]);
+          month = Number(match[2]);
+          year = Number(match[3]);
+        } else {
+          return null;
+        }
+      }
+
+      const date = new Date(year, month - 1, day);
+
+      if (
+        date.getFullYear() !== year ||
+        date.getMonth() !== month - 1 ||
+        date.getDate() !== day
+      ) {
+        return null;
+      }
+
+      return date;
+    }
+
+    function formatDate(date) {
+      if (!date) return "غير محدد";
+
+      return new Intl.DateTimeFormat("ar", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }).format(date);
+    }
+
+    function getExpiryStatus(value) {
+      if (!value) {
+        return {
+          text: "تاريخ الانتهاء غير محدد",
+          className: "unknown"
+        };
+      }
+
+      const expiryDate = parseExpiryDate(value);
+
+      if (!expiryDate) {
+        return {
+          text: "تعذر تحديد حالة الصلاحية",
+          className: "unknown"
+        };
+      }
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (expiryDate < today) {
+        return {
+          text: "منتهي الصلاحية",
+          className: "expired"
+        };
+      }
+
+      return {
+        text: "ساري الصلاحية",
+        className: "valid"
+      };
+    }
+
+    function showPartner(record) {
+      const { body, grid } = createResultCard(
+        "بيانات الاعتماد",
+        "سجل الاعتماد في قاعدة بيانات الكلية"
+      );
+
+      addField(grid, "الاسم باللغة العربية", record.ArabicName);
+      addField(grid, "الاسم باللغة الإنجليزية", record.EnglishName);
+      addField(grid, "صفة / نوع الاعتماد", record.Capacity);
+      addField(grid, "الموقع", record.Location);
+
+      const expiryDate = parseExpiryDate(record.ExpiryDate);
+      addField(
+        grid,
+        "تاريخ انتهاء الاعتماد",
+        expiryDate ? formatDate(expiryDate) : (record.ExpiryDate || "غير محدد")
+      );
+
+      const status = getExpiryStatus(record.ExpiryDate);
+      const statusField = createElement("div", "result-field");
+      statusField.appendChild(createElement("span", "field-label", "حالة الاعتماد"));
+
+      const statusBadge = createElement("span", "status " + status.className, status.text);
+      statusField.appendChild(statusBadge);
+      grid.appendChild(statusField);
+
+      if (status.className === "unknown") {
+        showMessage(
+          "تم العثور على سجل الاعتماد، لكن لم نتمكن من تأكيد حالة صلاحيته من التاريخ المسجل.",
+          "warning"
+        );
+      }
+    }
+
+    async function searchRecord() {
+      const query = searchInput.value.trim();
+
+      clearResults();
+
+      if (!query) {
+        showMessage(
+          currentTab === "cert"
+            ? "يرجى إدخال الرقم المرجعي للشهادة."
+            : "يرجى إدخال الاسم العربي أو الإنجليزي للجهة.",
+          "warning"
+        );
+        searchInput.focus();
+        return;
+      }
+
+      setLoading(true);
+      showMessage("جارٍ الاتصال بقاعدة البيانات والبحث عن السجل...", "info");
+
+      try {
+        if (currentTab === "cert") {
+          const data = await getCertData();
+          const record = data.find(row =>
+            normalize(row.RefNumber) === normalize(query)
+          );
+
+          clearMessage();
+
+          if (!record) {
+            showMessage("لم يتم العثور على شهادة تطابق الرقم المرجعي المدخل.", "error");
+            return;
+          }
+
+          showCertificate(record);
+
+        } else {
+          const data = await getPartnerData();
+          const searchValue = normalize(query);
+
+          const matches = data.filter(row =>
+            normalize(row.ArabicName).includes(searchValue) ||
+            normalize(row.EnglishName).includes(searchValue)
+          );
+
+          clearMessage();
+
+          if (!matches.length) {
+            showMessage("لم يتم العثور على اعتماد يطابق الاسم المدخل.", "error");
+            return;
+          }
+
+          matches.forEach(showPartner);
+        }
+
+      } catch (error) {
+        console.error("Verification error:", error);
+
+        showMessage(
+          "تعذر الاتصال بقاعدة البيانات حالياً. تحقق من اتصال الإنترنت وإعدادات نشر Google Sheets بصيغة CSV، ثم حاول مجدداً.",
+          "error"
+        );
+
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    function switchTab(tab) {
+      currentTab = tab;
+      clearResults();
+      searchInput.value = "";
+
+      const isCert = tab === "cert";
+
+      certTab.classList.toggle("active", isCert);
+      partnerTab.classList.toggle("active", !isCert);
+
+      sectionTitle.textContent = isCert
+        ? "التحقق من الشهادات"
+        : "التحقق من الاعتمادات";
+
+      sectionDescription.textContent = isCert
+        ? "أدخل الرقم المرجعي للشهادة للتحقق من بياناتها المسجلة في قاعدة بيانات الكلية."
+        : "أدخل الاسم العربي أو الإنجليزي للجهة للتحقق من بيانات اعتمادها المسجلة.";
+
+      searchLabel.textContent = isCert
+        ? "الرقم المرجعي للشهادة"
+        : "اسم الجهة أو المؤسسة";
+
+      searchInput.placeholder = isCert
+        ? "أدخل الرقم المرجعي للشهادة"
+        : "أدخل الاسم العربي أو الإنجليزي";
+
+      searchHint.textContent = isCert
+        ? "يرجى إدخال الرقم المرجعي كما هو موضح في الشهادة."
+        : "يمكن البحث باستخدام الاسم العربي أو الإنجليزي للجهة.";
+
+      const url = new URL(window.location.href);
+      url.searchParams.set("tab", tab);
+      window.history.replaceState({}, "", url);
+    }
+
+    certTab.addEventListener("click", () => switchTab("cert"));
+    partnerTab.addEventListener("click", () => switchTab("partner"));
+    searchButton.addEventListener("click", searchRecord);
+
+    searchInput.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        searchRecord();
+      }
     });
 
-    function handleEnter(event, type) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            if (type === 'cert') verifyCertificate();
-            if (type === 'partner') verifyPartner();
-        }
+    /* تحديد التبويب عند فتح الصفحة من رابط الصفحة الرئيسية */
+
+    const initialTab = new URLSearchParams(window.location.search).get("tab");
+
+    if (initialTab === "partner") {
+      switchTab("partner");
+    } else {
+      switchTab("cert");
     }
-
-    function verifyCertificate() {
-        const inputRef = document.getElementById('certInput').value.trim().toUpperCase();
-        const resultBox = document.getElementById('result-box');
-        
-        if(!inputRef) return alert('الرجاء إدخال الرقم المرجعي للشهادة');
-
-        resultBox.style.display = 'block';
-        resultBox.innerHTML = '<div style="text-align:center; padding: 20px;"><i class="fas fa-spinner fa-spin fa-2x" style="color:#1e3a8a;"></i><p style="margin-top:10px;">جاري استخراج البيانات...</p></div>';
-        resultBox.style.background = '#f1f5f9';
-        resultBox.style.borderColor = '#cbd5e1';
-
-        Papa.parse(certCsvUrl, {
-            download: true, header: true,
-            complete: function(results) {
-                const record = results.data.find(row => row.RefNumber && row.RefNumber.trim().toUpperCase() === inputRef);
-                
-                if(record) {
-                    let html = `
-                        <div style="text-align: center; margin-bottom: 20px;">
-                            <i class="fas fa-check-circle" style="font-size: 35px; color: #059669;"></i>
-                            <div style="font-weight: bold; color: #059669; margin-top: 8px; font-size: 18px;">وثيقة معتمدة وموثقة</div>
-                        </div>
-                        <div class="result-item"><strong>الاسم الكامل:</strong> <span>${record.StudentName}</span></div>
-                        <div class="result-item"><strong>الدولة:</strong> <span>${record.Country}</span></div>
-                        <div class="result-item"><strong>البرنامج التدريبي:</strong> <span>${record.CourseName}</span></div>
-                        <div class="result-item"><strong>مسمى الشهادة:</strong> <span>${record.CertificateType}</span></div>
-                        <div class="result-item"><strong>صادرة بتوقيع:</strong> <span>${record.Signatory}</span></div>
-                    `;
-                    if (record.CertificateLink && record.CertificateLink.trim() !== '') {
-                        html += `<a href="${record.CertificateLink.trim()}" target="_blank" class="pdf-btn"><i class="fas fa-file-pdf" style="margin-left: 8px;"></i> عرض وتحميل الشهادة الأصلية</a>`;
-                    }
-                    resultBox.innerHTML = html;
-                    resultBox.style.background = '#f0fdf4'; resultBox.style.borderColor = '#bbf7d0';
-                } else {
-                    resultBox.innerHTML = `<div style="text-align: center; color: #dc2626;"><i class="fas fa-times-circle fa-3x" style="margin-bottom: 10px;"></i><p style="font-weight: bold; font-size: 16px;">الرقم المرجعي غير صحيح أو غير مدرج</p></div>`;
-                    resultBox.style.background = '#fef2f2'; resultBox.style.borderColor = '#fecaca';
-                }
-            },
-            error: function() { resultBox.innerHTML = '<p style="color:red; text-align:center;">حدث خطأ في الاتصال، يرجى المحاولة لاحقاً.</p>'; }
-        });
-    }
-
-    function verifyPartner() {
-        const inputStr = document.getElementById('partnerInput').value.trim().toLowerCase();
-        const resultBox = document.getElementById('result-box');
-        
-        if(!inputStr) return alert('الرجاء إدخال اسم المدرب أو الشريك');
-
-        resultBox.style.display = 'block';
-        resultBox.innerHTML = '<div style="text-align:center; padding: 20px;"><i class="fas fa-spinner fa-spin fa-2x" style="color:#b8860b;"></i><p style="margin-top:10px;">جاري استخراج البيانات...</p></div>';
-        resultBox.style.background = '#f1f5f9';
-        resultBox.style.borderColor = '#cbd5e1';
-
-        Papa.parse(partnerCsvUrl, {
-            download: true, header: true,
-            complete: function(results) {
-                const record = results.data.find(row => 
-                    (row.ArabicName && row.ArabicName.toLowerCase().includes(inputStr)) || 
-                    (row.EnglishName && row.EnglishName.toLowerCase().includes(inputStr))
-                );
-
-                if(record) {
-                    let statusBadge = '';
-                    if(record.ExpiryDate) {
-                        const expiryDate = new Date(record.ExpiryDate);
-                        if (expiryDate >= new Date()) statusBadge = `<span class="status-badge status-active">ساري (حتى ${record.ExpiryDate})</span>`;
-                        else statusBadge = `<span class="status-badge status-expired">منتهي (منذ ${record.ExpiryDate})</span>`;
-                    } else { statusBadge = `<span>غير محدد</span>`; }
-
-                    resultBox.innerHTML = `
-                        <div style="text-align: center; margin-bottom: 20px;">
-                            <i class="fas fa-certificate" style="font-size: 35px; color: #b8860b;"></i>
-                            <div style="font-weight: bold; color: #b8860b; margin-top: 8px; font-size: 18px;">تم العثور على سجل معتمد</div>
-                        </div>
-                        <div class="result-item"><strong>الاسم (عربي):</strong> <span>${record.ArabicName || '-'}</span></div>
-                        <div class="result-item"><strong>الاسم (إنجليزي):</strong> <span>${record.EnglishName || '-'}</span></div>
-                        <div class="result-item"><strong>الصفة/الاعتماد:</strong> <span>${record.Capacity || '-'}</span></div>
-                        <div class="result-item"><strong>النطاق الجغرافي:</strong> <span>${record.Location || '-'}</span></div>
-                        <div class="result-item" style="align-items: center;"><strong>حالة الاعتماد:</strong> ${statusBadge}</div>
-                    `;
-                    resultBox.style.background = '#fdfaf0'; resultBox.style.borderColor = '#f6e0b5';
-                } else {
-                    resultBox.innerHTML = `<div style="text-align: center; color: #dc2626;"><i class="fas fa-times-circle fa-3x" style="margin-bottom: 10px;"></i><p style="font-weight: bold; font-size: 16px;">لم يتم العثور على سجل يطابق هذا الاسم</p></div>`;
-                    resultBox.style.background = '#fef2f2'; resultBox.style.borderColor = '#fecaca';
-                }
-            },
-            error: function() { resultBox.innerHTML = '<p style="color:red; text-align:center;">حدث خطأ في الاتصال، يرجى المحاولة لاحقاً.</p>'; }
-        });
-    }
-</script>
+  </script>
 
 </body>
 </html>
